@@ -10,12 +10,22 @@ public class TableInfo {
         return columns.count()
     }
 
+    public var initFinished = false
+    private set
+
     public constructor(name: String) {
         this.name = name
         columns = ArrayList()
     }
 
-    public fun getColumnsNames(): Array<String> {
+    public fun finishInit() {
+        //call after adding columns
+        initFinished = true
+    }
+
+    public fun getColumnsNames(): Array<String>? {
+        if (!initFinished)
+            return null
         var result = emptyArray<String>()
         for (e in columns.select { c -> c.name })
             result += e
@@ -23,9 +33,17 @@ public class TableInfo {
     }
 
     public fun<T: Any> addColumn(name: String, type: KClass<T>) : Boolean {
-        if (columns.select { e: ColumnInfo<Any> -> e.name  }.contains(name))
+        if (initFinished || columns.select { e: ColumnInfo<Any> -> e.name  }.contains(name))
             return false
         columns.add(ColumnInfo(name, type as KClass<Any>))
+        return true
+    }
+
+    public fun<T: Any> addColumn(name: String, type: KClass<T>, isIndex: Boolean) : Boolean {
+        if (initFinished || columns.select { e: ColumnInfo<Any> -> e.name  }.contains(name) ||
+                columns.select { c -> c.isIndex }.contains(true) && isIndex) //idk why
+            return false
+        columns.add(ColumnInfo(name, type as KClass<Any>, isIndex))
         return true
     }
 
