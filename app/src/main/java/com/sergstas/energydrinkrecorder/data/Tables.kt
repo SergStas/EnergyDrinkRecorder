@@ -1,7 +1,7 @@
 package com.sergstas.energydrinkrecorder.data
 
 import android.provider.BaseColumns
-import com.sergstas.lib.sql.TableInfo
+import com.sergstas.lib.sql.models.TableInfo
 
 class Tables {
     companion object {

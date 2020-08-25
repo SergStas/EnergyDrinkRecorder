@@ -1,9 +1,8 @@
-package com.sergstas.energydrinkrecorder
+package com.sergstas.energydrinkrecorder.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.sergstas.energydrinkrecorder.data.OpenHelper
-import com.sergstas.extensions.select
+import com.sergstas.energydrinkrecorder.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

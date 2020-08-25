@@ -1,16 +1,19 @@
-package com.sergstas.energydrinkrecorder.data
+package com.sergstas.lib.sql.dbcontrol
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import com.sergstas.extensions.select
-import com.sergstas.lib.sql.ColumnInfo
-import com.sergstas.lib.sql.TableInfo
+import com.sergstas.lib.sql.models.ColumnInfo
+import com.sergstas.lib.sql.models.TableInfo
+import com.sergstas.lib.sql.res.StrConsts
 import java.lang.Exception
 
 class OpenHelper(context: Context?, table: TableInfo) :
-    SQLiteOpenHelper(context, table.name, null, VERSION) {
+    SQLiteOpenHelper(context, table.name, null,
+        VERSION
+    ) {
     companion object {
         private const val VERSION = 1
 
@@ -36,9 +39,8 @@ class OpenHelper(context: Context?, table: TableInfo) :
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        val request = ("create table ${_table.name} (${
-            _table.columns.select { c -> columnToPartOfInitRequest(c) }.joinToString(", ")
-        })")
+        val request = String.format(StrConsts.QUERY_CREATE_TABLE, _table.name,
+            _table.columns.select { c -> columnToPartOfInitRequest(c)}.joinToString(", "))
         db.execSQL(request)
     }
 

@@ -1,4 +1,7 @@
-package com.sergstas.lib.sql
+package com.sergstas.lib.sql.models
+
+import com.sergstas.extensions.joinToString
+import com.sergstas.extensions.select
 
 public class Row {
     public val parent: TableInfo
@@ -8,6 +11,9 @@ public class Row {
     public var values: ArrayList<Any?>
     public var isFilled: Boolean = false
         private set
+
+    public val valuesParamsString
+        get() = if (!isFilled) null else values.select { v -> v.toString() }.joinToString(", ")
 
     public constructor(table: TableInfo) {
         parent = table

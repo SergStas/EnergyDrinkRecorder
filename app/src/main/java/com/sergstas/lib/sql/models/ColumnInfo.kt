@@ -1,4 +1,4 @@
-package com.sergstas.lib.sql
+package com.sergstas.lib.sql.models
 
 import kotlin.reflect.KClass
 

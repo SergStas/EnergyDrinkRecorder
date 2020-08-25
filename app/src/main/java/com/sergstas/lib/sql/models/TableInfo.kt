@@ -1,5 +1,6 @@
-package com.sergstas.lib.sql
+package com.sergstas.lib.sql.models
 
+import com.sergstas.extensions.joinToString
 import com.sergstas.extensions.select
 import kotlin.reflect.KClass
 
@@ -9,6 +10,9 @@ public class TableInfo {
     public val columnsCount: Int get() {
         return columns.count()
     }
+
+    public val columnsParamsString
+        get() = if (!initFinished) null else columns.select { c -> c.name }.joinToString(", ")
 
     public var initFinished = false
     private set
@@ -35,7 +39,12 @@ public class TableInfo {
     public fun<T: Any> addColumn(name: String, type: KClass<T>) : Boolean {
         if (initFinished || columns.select { e: ColumnInfo<Any> -> e.name  }.contains(name))
             return false
-        columns.add(ColumnInfo(name, type as KClass<Any>))
+        columns.add(
+            ColumnInfo(
+                name,
+                type as KClass<Any>
+            )
+        )
         return true
     }
 
@@ -43,7 +52,13 @@ public class TableInfo {
         if (initFinished || columns.select { e: ColumnInfo<Any> -> e.name  }.contains(name) ||
                 columns.select { c -> c.isIndex }.contains(true) && isIndex) //idk why
             return false
-        columns.add(ColumnInfo(name, type as KClass<Any>, isIndex))
+        columns.add(
+            ColumnInfo(
+                name,
+                type as KClass<Any>,
+                isIndex
+            )
+        )
         return true
     }
 
