@@ -1,6 +1,9 @@
 package com.sergstas.extensions
 
 import android.database.Cursor
+import java.sql.Blob
+import kotlin.reflect.KClass
+import kotlin.reflect.cast
 
 public fun Cursor.getIntByName(name: String): Int? {
     val index = this.getColumnIndex(name)
@@ -69,6 +72,20 @@ public fun Cursor.getLongByName(name: String): Long? {
     }
     catch (e: Exception) {
         null
+    }
+}
+
+@ExperimentalStdlibApi
+public fun Cursor.tryGetValue(name: String, type: KClass<Any>) : Any? {
+    return when(type) {
+        Int::class -> type.cast(this.getIntByName(name))
+        String::class -> type.cast(this.getStringByName(name))
+        Double::class -> type.cast(this.getDoubleByName(name))
+        Float::class -> type.cast(this.getFloatByName(name))
+        Short::class -> type.cast(this.getShortByName(name))
+        Long::class -> type.cast(this.getLongByName(name))
+        Blob::class -> type.cast(this.getBlobByName(name))
+        else -> null
     }
 }
 

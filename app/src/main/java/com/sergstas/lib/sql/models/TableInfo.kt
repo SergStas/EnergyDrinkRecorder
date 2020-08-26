@@ -15,7 +15,7 @@ public class TableInfo {
         get() = if (!initFinished) null else columns.select { c -> c.name }.joinToString(", ")
 
     public var initFinished = false
-    private set
+        private set
 
     public constructor(name: String) {
         this.name = name
@@ -25,6 +25,14 @@ public class TableInfo {
     public fun finishInit() {
         //call after adding columns
         initFinished = true
+    }
+
+    public fun getColumn(name: String): ColumnInfo<Any>? {
+        return columns.firstOrNull { c -> c.name == name }
+    }
+
+    public fun containsColumn(name: String): Boolean {
+        return columns.select { c -> c.name }.contains(name)
     }
 
     public fun getColumnsNames(): Array<String>? {

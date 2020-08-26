@@ -1,10 +1,12 @@
 package com.sergstas.lib.sql.dbcontrol
 
 import android.content.Context
+import android.database.Cursor
 import com.sergstas.lib.sql.models.Row
 import com.sergstas.lib.sql.models.TableInfo
 import com.sergstas.lib.sql.res.StrConsts
 import java.lang.Exception
+import kotlin.reflect.cast
 
 class DBController public constructor(context: Context) {
     private val _context: Context = context
@@ -31,5 +33,25 @@ class DBController public constructor(context: Context) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    @ExperimentalStdlibApi
+    public fun tryGetByIndex(indexName: String, index: Any?, tableId: String): Row? {
+        if (!_tables.containsKey(tableId) || !_tables[tableId]!!.containsColumn(indexName) ||
+            !_tables[tableId]!!.getColumn(indexName)!!.isIndex)
+            return null
+        val table = _tables[tableId]!!
+        val castedId = (table.getColumn(indexName)!!.type).cast(index)
+        val db = _helpers[tableId]!!.readableDatabase
+        val query = String.format(StrConsts.QUERY_SELECT_BY_ID, table.name, indexName, castedId)
+        val cursor: Cursor
+        try {
+            cursor = db.rawQuery(query, null)
+        }
+        catch (e: Exception) {
+            return null
+        }
+        val result = Row(table)
+        return if (result.fillFromCursor(cursor)) result else null
     }
 }
