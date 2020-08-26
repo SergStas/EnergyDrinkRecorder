@@ -2,6 +2,8 @@ package com.sergstas.lib.sql.models
 
 import com.sergstas.extensions.joinToString
 import com.sergstas.extensions.select
+import com.sergstas.extensions.toArrayList
+import com.sergstas.extensions.where
 import kotlin.reflect.KClass
 
 public class TableInfo {
@@ -9,6 +11,10 @@ public class TableInfo {
     public val columns: ArrayList<ColumnInfo<Any>>
     public val columnsCount: Int get() {
         return columns.count()
+    }
+
+    public val indexers: ArrayList<ColumnInfo<Any>> get() {
+        return columns.where{ c -> c.isIndex}.toArrayList()
     }
 
     public val columnsParamsString

@@ -41,6 +41,13 @@ public fun<T> Iterable<T>.format(template: String): String {
     return result + parts.skip(i).stringConcat()
 }
 
+public fun<T> Iterable<T>.where(selector: (T) -> Boolean): Iterable<T> {
+    val result = ArrayList<T>()
+    for (e in this)
+        result.add(e)
+    return result
+}
+
 public fun<T> Iterable<T>.stringConcat(): String {
     var result = ""
     for (e in this)

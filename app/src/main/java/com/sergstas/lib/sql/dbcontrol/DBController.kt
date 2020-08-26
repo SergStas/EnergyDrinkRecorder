@@ -54,4 +54,20 @@ class DBController public constructor(context: Context) {
         val result = Row(table)
         return if (result.fillFromCursor(cursor)) result else null
     }
+
+    @ExperimentalStdlibApi
+    public fun tryGetAllPositions(tableId: String): ArrayList<Row>? {
+        if (!_tables.containsKey(tableId))
+            return null
+        val result = ArrayList<Row>()
+        val table = _tables[tableId]!!
+        val cursor = _helpers[tableId]!!.readableDatabase.rawQuery(String.format(StrConsts.QUERY_SELECT_ALL, table.name), null)
+        while (cursor.moveToNext()) {
+            val row = Row(table)
+            if (!row.fillFromCursor(cursor))
+                return null
+            result.add(row)
+        }
+        return result
+    }
 }
