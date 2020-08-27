@@ -24,6 +24,7 @@ public class Row {
     }
 
     public fun fill(params: Iterable<Any?>): Boolean {
+        values.clear()
         if (params.count() != columns.count()) {
             isFilled = false
             return false

@@ -78,7 +78,7 @@ public fun Cursor.getLongByName(name: String): Long? {
 @ExperimentalStdlibApi
 public fun Cursor.tryGetValue(name: String, type: KClass<Any>) : Any? {
     return when(type) {
-        Int::class -> type.cast(this.getIntByName(name))
+        Int::class -> this.getIntByName(name)
         String::class -> type.cast(this.getStringByName(name))
         Double::class -> type.cast(this.getDoubleByName(name))
         Float::class -> type.cast(this.getFloatByName(name))
