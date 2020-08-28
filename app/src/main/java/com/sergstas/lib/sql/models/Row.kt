@@ -14,7 +14,7 @@ public class Row {
         private set
 
     public val valuesParamsString
-        get() = if (!isFilled) null else values.select { v -> v.toString() }.joinToString(", ")
+        get() = if (!isFilled) null else values.select { v -> v.toString() }.format(getValuesStrPlaceholders().joinToString(", "))
 
     public constructor(table: TableInfo) {
         parent = table
@@ -44,12 +44,18 @@ public class Row {
     public fun fillFromCursor(cursor: Cursor): Boolean {
         var args = emptyArray<Any?>()
         for (column in columns) {
-            //var e = cursor.valuesToStrTemplate("id=%s, date=%s", arrayListOf("_id", "date"))
             if (cursor.tryGetValue(column.name, column.type) == null)
                 return false
             else
                 args += cursor.tryGetValue(column.name, column.type)
         }
         return fill(args.toArrayList())
+    }
+
+    private fun getValuesStrPlaceholders(): Iterable<String> {
+        val result = ArrayList<String>()
+        for (info in columns)
+            result.add(if(info.type == String::class) "'%s'" else "%s")
+        return result
     }
 }

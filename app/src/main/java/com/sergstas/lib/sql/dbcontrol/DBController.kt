@@ -5,7 +5,7 @@ import android.database.Cursor
 import com.sergstas.extensions.format
 import com.sergstas.lib.sql.models.Row
 import com.sergstas.lib.sql.models.TableInfo
-import com.sergstas.lib.sql.res.StrConsts
+import com.sergstas.lib.sql.res.StrConstants
 import java.lang.Exception
 import kotlin.reflect.cast
 
@@ -22,16 +22,47 @@ class DBController public constructor(context: Context) {
         return true
     }
 
-    public fun tryAddPosition(row: Row, tableId: String, valuesTemplate: String): Boolean {
+    public fun tryAddPosition(row: Row, tableId: String): Boolean {
         if (!_tables.containsKey(tableId) || !row.isFilled)
             return false
         val table = _tables[tableId]
         val db = _helpers[tableId]!!.writableDatabase
-        val query = String.format(StrConsts.QUERY_ADD, table!!.name, table!!.columnsParamsString, row.values.format(valuesTemplate))
+        val query = String.format(StrConstants.QUERY_ADD, table!!.name, table!!.columnsParamsString, row.values.format(row.valuesParamsString!!))
         return try {
             db.execSQL(query)
             true
         } catch (e: Exception) {
+            false
+        }
+    }
+
+    @ExperimentalStdlibApi
+    public fun tryRemoveBy(columnName: String, value: Any?, tableId: String): Boolean {
+        if (!_tables.containsKey(tableId) || !_tables[tableId]!!.containsColumn(columnName))
+            return false
+        val table = _tables[tableId]!!
+        val column = table.getColumn(columnName)!!
+        val castedId = (column.type).cast(value)
+        val db = _helpers[tableId]!!.readableDatabase
+        val query = String.format(StrConstants.QUERY_DELETE_FROM_WHERE, table.name, columnName,
+            if (column.type == String::class) "`$castedId`" else castedId.toString())
+        return try {
+            db.execSQL(query, null)
+            true
+        }
+        catch (e: Exception) {
+            false
+        }
+    }
+
+    public fun tryClear(tableId: String): Boolean {
+        if (!_tables.containsKey(tableId))
+            return false
+        return try {
+            _helpers[tableId]!!.writableDatabase.execSQL(String.format(StrConstants.QUERY_DELETE_ALL, _tables[tableId]!!))
+            true
+        }
+        catch (e: Exception) {
             false
         }
     }
@@ -43,7 +74,7 @@ class DBController public constructor(context: Context) {
         val table = _tables[tableId]!!
         val castedId = (table.getColumn(columnName)!!.type).cast(value)
         val db = _helpers[tableId]!!.readableDatabase
-        val query = String.format(StrConsts.QUERY_SELECT_BY_ID, table.name, columnName, castedId)
+        val query = String.format(StrConstants.QUERY_SELECT_WHERE, table.name, columnName, castedId)
         val cursor: Cursor
         try {
             cursor = db.rawQuery(query, null)
@@ -62,7 +93,7 @@ class DBController public constructor(context: Context) {
             return null
         val result = ArrayList<Row>()
         val table = _tables[tableId]!!
-        val cursor = _helpers[tableId]!!.readableDatabase.rawQuery(String.format(StrConsts.QUERY_SELECT_ALL, table.name), null)
+        val cursor = _helpers[tableId]!!.readableDatabase.rawQuery(String.format(StrConstants.QUERY_SELECT_ALL, table.name), null)
         while (cursor.moveToNext()) {
             val row = Row(table)
             if (!row.fillFromCursor(cursor))

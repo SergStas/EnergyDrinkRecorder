@@ -23,15 +23,8 @@ class MainActivity : AppCompatActivity() {
     @ExperimentalStdlibApi
     private fun initDB() {
         _controller = DBController(this)
-        val row = Row(TablesTemplates.POSITIONS)
-        if (_controller.tryAddTable(TablesTemplates.ENTRIES, ENTRIES_ID) &&
-            row.fill(arrayListOf(null, "a", 0.5f, 33.5f)) &&
-            _controller.tryAddTable(TablesTemplates.POSITIONS, POSITIONS_ID) &&
-            _controller.tryAddPosition(row, POSITIONS_ID, "%s, '%s', %s, %s")) {
-            val extractedRow = _controller.tryGetBy("name", "a", POSITIONS_ID)
-            val fullDb = _controller.tryGetAllPositions(POSITIONS_ID)
-            if (extractedRow != null && fullDb != null)
-                main_tHelloWorld.text = "done"
-        }
+        if (!_controller.tryAddTable(TablesTemplates.POSITIONS, POSITIONS_ID) ||
+            !_controller.tryAddTable(TablesTemplates.ENTRIES, ENTRIES_ID))
+            throw ExceptionInInitializerError("Failed to initialize tables")
     }
 }

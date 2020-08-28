@@ -7,7 +7,7 @@ import android.util.Log
 import com.sergstas.extensions.select
 import com.sergstas.lib.sql.models.ColumnInfo
 import com.sergstas.lib.sql.models.TableInfo
-import com.sergstas.lib.sql.res.StrConsts
+import com.sergstas.lib.sql.res.StrConstants
 import java.lang.Exception
 
 class OpenHelper(context: Context?, table: TableInfo) :
@@ -39,7 +39,7 @@ class OpenHelper(context: Context?, table: TableInfo) :
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        val request = String.format(StrConsts.QUERY_CREATE_TABLE, _table.name,
+        val request = String.format(StrConstants.QUERY_CREATE_TABLE, _table.name,
             _table.columns.select { c -> columnToPartOfInitRequest(c)}.joinToString(", "))
         db.execSQL(request)
     }
