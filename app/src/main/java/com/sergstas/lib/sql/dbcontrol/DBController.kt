@@ -2,6 +2,7 @@ package com.sergstas.lib.sql.dbcontrol
 
 import android.content.Context
 import android.database.Cursor
+import com.sergstas.extensions.format
 import com.sergstas.lib.sql.models.Row
 import com.sergstas.lib.sql.models.TableInfo
 import com.sergstas.lib.sql.res.StrConsts
@@ -21,12 +22,12 @@ class DBController public constructor(context: Context) {
         return true
     }
 
-    public fun tryAddPosition(row: Row, tableId: String): Boolean {
+    public fun tryAddPosition(row: Row, tableId: String, valuesTemplate: String): Boolean {
         if (!_tables.containsKey(tableId) || !row.isFilled)
             return false
         val table = _tables[tableId]
         val db = _helpers[tableId]!!.writableDatabase
-        val query = String.format(StrConsts.QUERY_ADD, table!!.name, table!!.columnsParamsString, row.valuesParamsString)
+        val query = String.format(StrConsts.QUERY_ADD, table!!.name, table!!.columnsParamsString, row.values.format(valuesTemplate))
         return try {
             db.execSQL(query)
             true
@@ -50,6 +51,7 @@ class DBController public constructor(context: Context) {
         catch (e: Exception) {
             return null
         }
+        cursor.moveToFirst()
         val result = Row(table)
         return if (result.fillFromCursor(cursor)) result else null
     }

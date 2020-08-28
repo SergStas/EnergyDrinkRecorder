@@ -1,10 +1,8 @@
 package com.sergstas.lib.sql.models
 
 import android.database.Cursor
-import com.sergstas.extensions.tryGetValue
-import com.sergstas.extensions.joinToString
-import com.sergstas.extensions.select
-import com.sergstas.extensions.toArrayList
+import com.sergstas.extensions.*
+import kotlin.reflect.cast
 
 public class Row {
     public val parent: TableInfo
@@ -45,11 +43,13 @@ public class Row {
     @ExperimentalStdlibApi
     public fun fillFromCursor(cursor: Cursor): Boolean {
         var args = emptyArray<Any?>()
-        for (column in columns)
+        for (column in columns) {
+            //var e = cursor.valuesToStrTemplate("id=%s, date=%s", arrayListOf("_id", "date"))
             if (cursor.tryGetValue(column.name, column.type) == null)
                 return false
             else
                 args += cursor.tryGetValue(column.name, column.type)
+        }
         return fill(args.toArrayList())
     }
 }

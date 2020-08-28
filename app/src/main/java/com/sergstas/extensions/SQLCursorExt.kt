@@ -78,7 +78,7 @@ public fun Cursor.getLongByName(name: String): Long? {
 @ExperimentalStdlibApi
 public fun Cursor.tryGetValue(name: String, type: KClass<Any>) : Any? {
     return when(type) {
-        Int::class -> this.getIntByName(name)
+        Int::class -> type.cast(this.getIntByName(name))
         String::class -> type.cast(this.getStringByName(name))
         Double::class -> type.cast(this.getDoubleByName(name))
         Float::class -> type.cast(this.getFloatByName(name))
@@ -102,7 +102,7 @@ public fun Cursor.valueToString(name: String): String? {
     }
 }
 
-public fun Cursor.valueToStrTemplate(template: String, names: Iterable<String>): String? {
+public fun Cursor.valuesToStrTemplate(template: String, names: Iterable<String>): String? {
     val stringValues = ArrayList<String?>()
     for (name in names)
         stringValues.add(this.valueToString(name))

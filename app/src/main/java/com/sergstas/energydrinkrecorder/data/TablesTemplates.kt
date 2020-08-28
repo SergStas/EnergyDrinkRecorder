@@ -3,7 +3,7 @@ package com.sergstas.energydrinkrecorder.data
 import android.provider.BaseColumns
 import com.sergstas.lib.sql.models.TableInfo
 
-class Tables {
+class TablesTemplates {
     companion object {
         val POSITIONS = TableInfo("pos")
         val ENTRIES = TableInfo("entries")
