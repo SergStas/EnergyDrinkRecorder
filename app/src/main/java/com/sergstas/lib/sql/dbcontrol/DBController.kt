@@ -22,7 +22,11 @@ class DBController public constructor(context: Context) {
         return true
     }
 
-    public fun tryAddPosition(row: Row, tableId: String): Boolean {
+    public fun getTable(tableId: String): TableInfo? {
+        return if (_tables.containsKey(tableId)) _tables[tableId] else null
+    }
+
+    public fun tryAddPosition(tableId: String, row: Row): Boolean {
         if (!_tables.containsKey(tableId) || !row.isFilled)
             return false
         val table = _tables[tableId]
@@ -37,7 +41,7 @@ class DBController public constructor(context: Context) {
     }
 
     @ExperimentalStdlibApi
-    public fun tryRemoveBy(columnName: String, value: Any?, tableId: String): Boolean {
+    public fun tryRemoveBy(tableId: String, columnName: String, value: Any?): Boolean {
         if (!_tables.containsKey(tableId) || !_tables[tableId]!!.containsColumn(columnName))
             return false
         val table = _tables[tableId]!!
@@ -68,7 +72,7 @@ class DBController public constructor(context: Context) {
     }
 
     @ExperimentalStdlibApi
-    public fun tryGetBy(columnName: String, value: Any?, tableId: String): Row? {
+    public fun selectBy(tableId: String, columnName: String, value: Any?): Iterable<Row>? {
         if (!_tables.containsKey(tableId) || !_tables[tableId]!!.containsColumn(columnName))
             return null
         val table = _tables[tableId]!!
@@ -82,13 +86,18 @@ class DBController public constructor(context: Context) {
         catch (e: Exception) {
             return null
         }
-        cursor.moveToFirst()
-        val result = Row(table)
-        return if (result.fillFromCursor(cursor)) result else null
+        val result = ArrayList<Row>()
+        while (cursor.moveToNext()) {
+            val row = Row(table)
+            if (!row.fillFromCursor(cursor))
+                return null
+            result.add(row)
+        }
+        return result
     }
 
     @ExperimentalStdlibApi
-    public fun tryGetAllPositions(tableId: String): ArrayList<Row>? {
+    public fun getAllPositions(tableId: String): ArrayList<Row>? {
         if (!_tables.containsKey(tableId))
             return null
         val result = ArrayList<Row>()

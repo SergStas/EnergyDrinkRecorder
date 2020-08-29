@@ -18,7 +18,7 @@ class TablesTemplates {
             ENTRIES.addColumn("_id", Int::class, true)
             ENTRIES.addColumn("edId", Int::class)
             ENTRIES.addColumn("count", Int::class)
-            ENTRIES.addColumn("date", Int::class)
+            ENTRIES.addColumn("date", String::class)
             ENTRIES.finishInit()
         }
     }

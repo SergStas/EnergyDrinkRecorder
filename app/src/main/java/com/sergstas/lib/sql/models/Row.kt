@@ -28,8 +28,8 @@ public class Row {
             return false
         }
         for ((i, e) in params.withIndex()) {
-            var q1 = columns[i].type
-            var q2 = if (e != null) e::class else columns[i].type
+            //var q1 = columns[i].type
+            //var q2 = if (e != null) e::class else columns[i].type
             if (e != null && columns[i].type != e::class) {
                 isFilled = false
                 return false
@@ -38,6 +38,13 @@ public class Row {
         }
         isFilled = true
         return true
+    }
+
+    public fun getValue(columnName: String): Any? {
+        val index = columns.indexOf(columns.firstOrNull{ c-> c.name == columnName})
+        if (index == -1)
+            return null
+        return values[index]
     }
 
     @ExperimentalStdlibApi
