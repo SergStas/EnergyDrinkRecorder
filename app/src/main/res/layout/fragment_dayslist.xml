@@ -3,16 +3,14 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/entriesList_date"
-        android:text="Date"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"/>
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/entriesList_list"/>
+        android:id="@android:id/list"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@android:id/empty"/>
 
 </LinearLayout>
