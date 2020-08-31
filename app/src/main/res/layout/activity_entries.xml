@@ -5,18 +5,4 @@
     android:id="@+id/activity_entries_root"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-   <!--<fragment
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:name="com.sergstas.energydrinkrecorder.fragments.PlaceholderFragment"
-      android:id="@+id/fragment_placeholder"/>-->
-
-   <!-- <fragment
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="com.sergstas.energydrinkrecorder.fragments.EntriesListFragment"
-        android:id="@+id/entries__daysList"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>-->
-
 </androidx.constraintlayout.widget.ConstraintLayout>

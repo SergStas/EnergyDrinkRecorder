@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.sergstas.lib.sql.models.Row
 import java.lang.Exception
+import java.text.FieldPosition
 import kotlin.reflect.cast
 
 @ExperimentalStdlibApi
@@ -23,6 +24,11 @@ class EntryInfo constructor(var entryId: Int, var edId: Int): Parcelable {
         price = parcel.readValue(Float::class.java.classLoader) as? Float
         count = parcel.readValue(Int::class.java.classLoader) as? Int
         date = parcel.readString()
+    }
+
+    constructor(entry: Row, position: Row): this(Int::class.cast(entry.getValue("_id")), Int::class.cast(position.getValue("_id"))) {
+        fillFromEntriesRow(entry)
+        fillFromPositionsRow(position)
     }
 
     constructor(id: Int, edId: Int, edName: String, volume: Float, price: Float, count: Int, date: String) : this(id, edId) {
