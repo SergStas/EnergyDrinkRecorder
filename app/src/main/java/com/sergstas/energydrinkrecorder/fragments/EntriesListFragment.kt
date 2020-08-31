@@ -11,16 +11,20 @@ import com.sergstas.energydrinkrecorder.R
 import com.sergstas.energydrinkrecorder.models.EntryInfo
 import com.sergstas.extensions.round
 import kotlinx.android.synthetic.main.fragment_entrybar.view.*
+import java.util.ArrayList
 
 @ExperimentalStdlibApi
 class EntriesListFragment /*constructor(private val _entries: ArrayList<EntryInfo>, private val _context: Context)*/: ListFragment() {
+    private var _rows: ArrayList<EntryInfo>? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_dayslist, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val adapter = DaysListAdapter(activity!!.applicationContext, R.layout.fragment_entrybar, /*_entries*/ emptyList())
+        _rows = arguments!!.getParcelableArrayList<EntryInfo>("rows")
+        val adapter = DaysListAdapter(activity!!.applicationContext, R.layout.fragment_entrybar, _rows!!.toList())
         listAdapter = adapter
     }
 
@@ -35,8 +39,8 @@ class EntriesListFragment /*constructor(private val _entries: ArrayList<EntryInf
             val inflater = _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val bar = inflater.inflate(_view, parent, false)
             val row = _entryInfo[position]
+            bar.entryBar_id.text = row.entryId.toString()
             if (row.isFilled) {
-                bar.entryBar_id.text = row.entryId.toString()
                 bar.entryBar_name.text = row.edName
                 bar.entryBar_volume.text = row.volume!!.round(2).toString()
                 bar.entryBar_price.text = row.price!!.round(2).toString()
