@@ -1,15 +1,19 @@
 package com.sergstas.energydrinkrecorder.data
 
 import com.sergstas.energydrinkrecorder.activities.MainActivity
+import com.sergstas.energydrinkrecorder.models.EntryInfo
+import com.sergstas.extensions.select
+import com.sergstas.extensions.toArrayList
 import com.sergstas.lib.sql.dbcontrol.DBController
+import com.sergstas.lib.sql.models.Row
 import java.lang.Exception
 import java.sql.Date
 import kotlin.reflect.cast
 
+@ExperimentalStdlibApi
 class DBWorker public constructor(controller: DBController) {
     private val _controller = controller
 
-    @ExperimentalStdlibApi
     fun getStatsByDay(): Pair<Double, Double>? {
         val curDate = Date(System.currentTimeMillis()).toString()
         val rows = _controller.selectBy(MainActivity.ENTRIES_ID, "date", curDate)
@@ -28,5 +32,21 @@ class DBWorker public constructor(controller: DBController) {
                 return null
             }
         return Pair(liters, cost)
+    }
+
+    fun getAllEntryInfoInst(): ArrayList<EntryInfo> {
+        return _controller.getAllPositions(MainActivity.ENTRIES_ID)!!.select { row -> entryRowToEntryInfo(row) }.toArrayList()
+    }
+
+    fun getEDIdByName(name: String): Int {
+        return Int::class.cast(_controller.getAllPositions(MainActivity.POSITIONS_ID)!!
+            .first { pos -> String::class.cast(pos.getValue("name")) == name }
+            .getValue("_id"))
+    }
+
+    private fun entryRowToEntryInfo(entry: Row): EntryInfo {
+        val edId = Int::class.cast(entry.getValue("edId"))
+        val position = _controller.selectBy(MainActivity.POSITIONS_ID, "_id", edId)!!.first()
+        return EntryInfo(entry, position)
     }
 }

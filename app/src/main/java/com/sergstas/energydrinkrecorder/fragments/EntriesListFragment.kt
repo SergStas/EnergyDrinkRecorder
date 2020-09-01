@@ -19,9 +19,10 @@ class EntriesListFragment: ListFragment() {
     private var _rows: ArrayList<EntryInfo>? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _rows = arguments!!.getParcelableArrayList<EntryInfo>("entries")
+        _rows = arguments!!.getParcelableArrayList<EntryInfo>("rows")
         val view = inflater.inflate(R.layout.fragment_entrieslist, container, false)
         view.entriesList_date.text = _rows!!.first().date
+        childFragmentManager.beginTransaction()
         return view
     }
 

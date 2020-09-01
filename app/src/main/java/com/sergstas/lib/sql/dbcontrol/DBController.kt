@@ -63,7 +63,7 @@ class DBController public constructor(context: Context) {
         if (!_tables.containsKey(tableId))
             return false
         return try {
-            _helpers[tableId]!!.writableDatabase.execSQL(String.format(StrConstants.QUERY_DELETE_ALL, _tables[tableId]!!))
+            _helpers[tableId]!!.writableDatabase.execSQL(String.format(StrConstants.QUERY_DELETE_ALL, _tables[tableId]!!.name))
             true
         }
         catch (e: Exception) {

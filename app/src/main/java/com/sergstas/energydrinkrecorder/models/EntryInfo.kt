@@ -39,7 +39,7 @@ class EntryInfo constructor(var entryId: Int, var edId: Int): Parcelable {
         this.date = date
     }
 
-    fun fillFromEntriesRow(row: Row): Boolean {
+    private fun fillFromEntriesRow(row: Row): Boolean {
         return try {
             if (row.getValue("_id") != entryId)
                 return false
@@ -52,7 +52,7 @@ class EntryInfo constructor(var entryId: Int, var edId: Int): Parcelable {
         }
     }
 
-    fun fillFromPositionsRow(row: Row): Boolean {
+    private fun fillFromPositionsRow(row: Row): Boolean {
         return try {
             if (row.getValue("_id") != edId)
                 return false
