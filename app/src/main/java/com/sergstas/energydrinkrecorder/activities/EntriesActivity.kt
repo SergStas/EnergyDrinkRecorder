@@ -9,11 +9,10 @@ import com.sergstas.energydrinkrecorder.fragments.EntriesListFragment
 import com.sergstas.energydrinkrecorder.models.EntryInfo
 import com.sergstas.extensions.toArrayList
 import com.sergstas.lib.sql.dbcontrol.DBController
-import java.sql.Date
 
 @ExperimentalStdlibApi
 class EntriesActivity: AppCompatActivity() {
-    private val controller = DBController(this)
+    private val _controller = DBController(this)
     private lateinit var _worker: DBWorker
 
     init { initDB() }
@@ -21,7 +20,7 @@ class EntriesActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entries)
-        val data = _worker.getAllEntryInfoInst()
+        val data = _worker.getAllEntryInfo()
         val grouped = groupByDate(data)
         for (rows in grouped)
             addFragment(rows)
@@ -44,9 +43,9 @@ class EntriesActivity: AppCompatActivity() {
     }
 
     private fun initDB() {
-        _worker = DBWorker(controller)
-        if (!controller.tryAddTable(TablesTemplates.POSITIONS, MainActivity.POSITIONS_ID) ||
-            !controller.tryAddTable(TablesTemplates.ENTRIES, MainActivity.ENTRIES_ID))
+        _worker = DBWorker(_controller)
+        if (!_controller.tryAddTable(TablesTemplates.POSITIONS, MainActivity.POSITIONS_ID) ||
+            !_controller.tryAddTable(TablesTemplates.ENTRIES, MainActivity.ENTRIES_ID))
             throw ExceptionInInitializerError("Failed to initialize tables")
     }
 }

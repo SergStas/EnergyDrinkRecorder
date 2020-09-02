@@ -2,6 +2,7 @@ package com.sergstas.energydrinkrecorder.data
 
 import com.sergstas.energydrinkrecorder.activities.MainActivity
 import com.sergstas.energydrinkrecorder.models.EntryInfo
+import com.sergstas.energydrinkrecorder.models.PositionInfo
 import com.sergstas.extensions.select
 import com.sergstas.extensions.toArrayList
 import com.sergstas.lib.sql.dbcontrol.DBController
@@ -34,7 +35,11 @@ class DBWorker public constructor(controller: DBController) {
         return Pair(liters, cost)
     }
 
-    fun getAllEntryInfoInst(): ArrayList<EntryInfo> {
+    fun getAllPosInfo(): ArrayList<PositionInfo> {
+        return _controller.getAllPositions(MainActivity.POSITIONS_ID)!!.select { row -> PositionInfo(row) }.toArrayList()
+    }
+
+    fun getAllEntryInfo(): ArrayList<EntryInfo> {
         return _controller.getAllPositions(MainActivity.ENTRIES_ID)!!.select { row -> entryRowToEntryInfo(row) }.toArrayList()
     }
 

@@ -9,6 +9,7 @@ import com.sergstas.energydrinkrecorder.data.TablesTemplates
 import com.sergstas.extensions.round
 import com.sergstas.lib.sql.dbcontrol.DBController
 import com.sergstas.lib.sql.models.Row
+import kotlinx.android.synthetic.main.fragment_navigation.*
 import kotlinx.android.synthetic.main.fragment_statistics.*
 import kotlin.math.absoluteValue
 
@@ -34,9 +35,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setListeners() {
+        //TODO: pass controller
         statistics_bMore.setOnClickListener {
             val intent = Intent(this, EntriesActivity::class.java)
-            //TODO: pass controller
+            startActivity(intent)
+        }
+        navigation_bGoTo_positionsList.setOnClickListener {
+            val intent = Intent(this, PositionsActivity::class.java)
             startActivity(intent)
         }
     }

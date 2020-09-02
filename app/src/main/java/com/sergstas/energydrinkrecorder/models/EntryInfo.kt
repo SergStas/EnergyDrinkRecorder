@@ -8,7 +8,7 @@ import java.text.FieldPosition
 import kotlin.reflect.cast
 
 @ExperimentalStdlibApi
-class EntryInfo constructor(var entryId: Int, var edId: Int): Parcelable {
+class EntryInfo constructor(val entryId: Int, private val edId: Int): Parcelable {
     var edName: String? = null
     var volume: Float? = null
     var price: Float? = null
