@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">EnergyDrinkRecorderApp</string>
+    <string name="navigation_bGoTo_newEntry">New entry</string>
+    <string name="navigation_bGoTo_positionsData">Positions data</string>
+    <string name="navigation_bGoTo_manageEntries">Manage entries</string>
+    <string name="statistics_tData_loading">Loading data...</string>
+    <string name="statistics_bSwitch_total">Show total statistics</string>
+    <string name="statistics_bMore">All entries</string>
+    <string name="statistics_tData_today_placeholder">Today you drank %s liters and spended %s rub</string>
+    <string name="statistics_tData_today_noData">No entries by this day, good job</string>
+    <string name="statistics_tData_failed">Failed to access data</string>
+    <string name="entriesActivity_title">Entries</string>
+    <string name="fragment_entryBar_noData">---</string>
+    <string name="fragment_placeholder">placeholder</string>
+    <string name="entriesList_date_failed">Failed to load date</string>
+    <string name="entryBar_placeholder_id">id</string>
+    <string name="entryBar_placeholder_name">name</string>
+    <string name="entryBar_placeholder_volume">volume</string>
+    <string name="entryBar_placeholder_price">price</string>
+    <string name="entryBar_placeholder_count">count</string>
+    <string name="positionBar_placeholder_id">id</string>
+    <string name="positionBar_placeholder_name">name</string>
+    <string name="positionBar_placeholder_volume">volume</string>
+    <string name="positionBar_placeholder_price">price</string>
+    <string name="activity_positions_title">Positions</string>
+    <string name="newEntry_tEDName">ED name:</string>
+    <string name="activity_newEntry_title">New Entry</string>
+    <string name="newEntry_tCount">Count:</string>
+    <string name="newEntry_bSubmit">Submit</string>
+</resources>

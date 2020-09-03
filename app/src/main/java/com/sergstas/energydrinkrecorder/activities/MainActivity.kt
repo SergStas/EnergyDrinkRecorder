@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setListeners() {
-        //TODO: pass controller
+        //TODO: perform all DB work in main activity
         statistics_bMore.setOnClickListener {
             val intent = Intent(this, EntriesActivity::class.java)
             startActivity(intent)
@@ -43,6 +43,11 @@ class MainActivity : AppCompatActivity() {
         navigation_bGoTo_positionsList.setOnClickListener {
             val intent = Intent(this, PositionsActivity::class.java)
             startActivity(intent)
+        }
+        navigation_bGoTo_newEntry.setOnClickListener {
+            val intent = Intent(this, NewEntryActivity::class.java)
+            intent.putExtra("positions", _worker.getAllPosInfo())
+            startActivityForResult(intent, 0)
         }
     }
 

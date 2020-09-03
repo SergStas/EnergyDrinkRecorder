@@ -1,15 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/navigation_bGoTo_newEntry"
-        android:layout_marginHorizontal="20dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/navigation_bGoTo_newEntry" />
+        android:id="@+id/navigation_createNew_bar">
+
+        <Button
+            android:id="@+id/navigation_bGoTo_newEntry"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/navigation_bGoTo_newPosition"
+            app:layout_constraintHorizontal_weight="1"
+            android:text="@string/navigation_bGoTo_newEntry" />
+
+        <Button
+            android:id="@+id/navigation_bGoTo_newPosition"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/navigation_bGoTo_newEntry"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            android:text="New Position" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/navigation_bGoTo_positionsList"
