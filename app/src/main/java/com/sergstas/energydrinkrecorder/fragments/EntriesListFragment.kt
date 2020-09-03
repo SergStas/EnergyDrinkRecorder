@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_entrieslist.view.*
 import kotlinx.android.synthetic.main.fragment_entrybar.view.*
 import java.util.ArrayList
 
-@ExperimentalStdlibApi
+//@ExperimentalStdlibApi
 class EntriesListFragment: ListFragment() {
     private var _rows: ArrayList<EntryInfo>? = null
 

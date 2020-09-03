@@ -27,6 +27,30 @@
         android:id="@+id/newEntry_editCount"
         android:inputType="number"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/newEntry_tVolume"
+        android:text="@string/newEntry_sVolume"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/newEntry_spinVolume"
+        android:spinnerMode="dropdown"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/newEntry_tPrice"
+        android:text="@string/newEntry_price"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/newEntry_spinPrice"
+        android:spinnerMode="dropdown"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

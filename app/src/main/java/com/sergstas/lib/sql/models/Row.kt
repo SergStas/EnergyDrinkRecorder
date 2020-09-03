@@ -2,7 +2,6 @@ package com.sergstas.lib.sql.models
 
 import android.database.Cursor
 import com.sergstas.extensions.*
-import kotlin.reflect.cast
 
 public class Row {
     public val parent: TableInfo

@@ -1,7 +1,5 @@
 package com.sergstas.extensions
 
-import java.lang.Exception
-
 public fun <T, R> Iterable<T>.select(selector: (T) -> R): Iterable<R> {
     val result = ArrayList<R>()
     for (e in this)
@@ -44,7 +42,8 @@ public fun<T> Iterable<T>.format(template: String): String {
 public fun<T> Iterable<T>.where(selector: (T) -> Boolean): Iterable<T> {
     val result = ArrayList<T>()
     for (e in this)
-        result.add(e)
+//        if (selector(e))
+            result.add(e)
     return result
 }
 

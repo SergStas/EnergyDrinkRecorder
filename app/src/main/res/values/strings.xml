@@ -27,4 +27,6 @@
     <string name="activity_newEntry_title">New Entry</string>
     <string name="newEntry_tCount">Count:</string>
     <string name="newEntry_bSubmit">Submit</string>
+    <string name="newEntry_sVolume">Volume</string>
+    <string name="newEntry_price">Price</string>
 </resources>

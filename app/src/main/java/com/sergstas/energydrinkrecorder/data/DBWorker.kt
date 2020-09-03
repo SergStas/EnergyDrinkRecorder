@@ -9,7 +9,6 @@ import com.sergstas.lib.sql.dbcontrol.DBController
 import com.sergstas.lib.sql.models.Row
 import java.lang.Exception
 import java.sql.Date
-import kotlin.reflect.cast
 
 @ExperimentalStdlibApi
 class DBWorker public constructor(controller: DBController) {
@@ -23,11 +22,11 @@ class DBWorker public constructor(controller: DBController) {
         var cost = 0.0
         for (row in rows)
             try {
-                val count = Int::class.cast(row.getValue("count"))
-                val id = Int::class.cast(row.getValue("edId"))
+                val count = row.getValue("count") as Int
+                val id = row.getValue("edId") as Int
                 val edData = _controller.selectBy(MainActivity.POSITIONS_ID, "_id", id)!!.first()
-                liters += count * Float::class.cast(edData.getValue("volume"))
-                cost += count * Float::class.cast(edData.getValue("price"))
+                liters += count * (edData.getValue("volume") as Float)
+                cost += count * (edData.getValue("price") as Float)
             }
             catch (e: Exception) {
                 return null
@@ -44,13 +43,19 @@ class DBWorker public constructor(controller: DBController) {
     }
 
     fun getEDIdByName(name: String): Int {
-        return Int::class.cast(_controller.getAllPositions(MainActivity.POSITIONS_ID)!!
-            .first { pos -> String::class.cast(pos.getValue("name")) == name }
-            .getValue("_id"))
+        return (_controller.getAllPositions(MainActivity.POSITIONS_ID)!!
+            .first { pos -> pos.getValue("name") as String == name }
+            .getValue("_id")) as Int
+    }
+
+    fun addNewEntry(edId: Int, count: Int, date: String) {
+        val row = Row(_controller.getTable(MainActivity.ENTRIES_ID)!!)
+        row.fill(arrayListOf(null, edId, count, date))
+        _controller.tryAddPosition(MainActivity.ENTRIES_ID, row)
     }
 
     private fun entryRowToEntryInfo(entry: Row): EntryInfo {
-        val edId = Int::class.cast(entry.getValue("edId"))
+        val edId = entry.getValue("edId") as Int
         val position = _controller.selectBy(MainActivity.POSITIONS_ID, "_id", edId)!!.first()
         return EntryInfo(entry, position)
     }

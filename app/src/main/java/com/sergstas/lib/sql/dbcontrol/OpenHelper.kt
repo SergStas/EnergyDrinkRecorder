@@ -11,9 +11,7 @@ import com.sergstas.lib.sql.res.StrConstants
 import java.lang.Exception
 
 class OpenHelper(context: Context?, table: TableInfo) :
-    SQLiteOpenHelper(context, table.name, null,
-        VERSION
-    ) {
+    SQLiteOpenHelper(context, table.name, null, VERSION) {
     companion object {
         private const val VERSION = 1
 
@@ -29,7 +27,6 @@ class OpenHelper(context: Context?, table: TableInfo) :
         }
     }
 
-    private val _context: Context? = context
     private val _table: TableInfo = table
 
     init {

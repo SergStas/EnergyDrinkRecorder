@@ -4,10 +4,8 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.sergstas.lib.sql.models.Row
 import java.lang.Exception
-import java.text.FieldPosition
-import kotlin.reflect.cast
 
-@ExperimentalStdlibApi
+//@ExperimentalStdlibApi
 class EntryInfo constructor(val entryId: Int, private val edId: Int): Parcelable {
     var edName: String? = null
     var volume: Float? = null
@@ -26,7 +24,7 @@ class EntryInfo constructor(val entryId: Int, private val edId: Int): Parcelable
         date = parcel.readString()
     }
 
-    constructor(entry: Row, position: Row): this(Int::class.cast(entry.getValue("_id")), Int::class.cast(position.getValue("_id"))) {
+    constructor(entry: Row, position: Row): this(entry.getValue("_id") as Int, position.getValue("_id") as Int) {
         fillFromEntriesRow(entry)
         fillFromPositionsRow(position)
     }
@@ -43,8 +41,8 @@ class EntryInfo constructor(val entryId: Int, private val edId: Int): Parcelable
         return try {
             if (row.getValue("_id") != entryId)
                 return false
-            count = Int::class.cast(row.getValue("count"))
-            date = String::class.cast(row.getValue("date"))
+            count = row.getValue("count") as Int
+            date = row.getValue("date") as String
             true
         }
         catch (e: Exception) {
@@ -56,9 +54,9 @@ class EntryInfo constructor(val entryId: Int, private val edId: Int): Parcelable
         return try {
             if (row.getValue("_id") != edId)
                 return false
-            volume = Float::class.cast(row.getValue("volume"))
-            price = Float::class.cast(row.getValue("price"))
-            edName = String::class.cast(row.getValue("name"))
+            volume = row.getValue("volume") as Float
+            price = row.getValue("price") as Float
+            edName = row.getValue("name") as String
             true
         }
         catch (e: Exception) {
