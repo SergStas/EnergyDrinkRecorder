@@ -22,7 +22,6 @@ class EntriesListFragment: ListFragment() {
         _rows = arguments!!.getParcelableArrayList<EntryInfo>("rows")
         val view = inflater.inflate(R.layout.fragment_entrieslist, container, false)
         view.entriesList_date.text = _rows!!.first().date
-        childFragmentManager.beginTransaction()
         return view
     }
 

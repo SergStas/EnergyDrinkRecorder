@@ -34,4 +34,7 @@
     <string name="newPosition_price">Price:</string>
     <string name="newPosition_submit">Submit</string>
     <string name="activity_newPosition_title">New Position</string>
+    <string name="removeBar_tId">Id:</string>
+    <string name="removeBar_bRemoveId">Remove id</string>
+    <string name="removeBar_bClearAll">Clear all</string>
 </resources>
