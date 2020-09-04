@@ -29,4 +29,9 @@
     <string name="newEntry_bSubmit">Submit</string>
     <string name="newEntry_sVolume">Volume</string>
     <string name="newEntry_price">Price</string>
+    <string name="newPosition_tName">ED name:</string>
+    <string name="newPosition_volume">Volume:</string>
+    <string name="newPosition_price">Price:</string>
+    <string name="newPosition_submit">Submit</string>
+    <string name="activity_newPosition_title">New Position</string>
 </resources>

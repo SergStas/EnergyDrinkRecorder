@@ -19,7 +19,7 @@
         <activity android:name=".activities.EntriesActivity" android:label="@string/entriesActivity_title"/>
         <activity android:name=".activities.PositionsActivity" android:label="@string/activity_positions_title"/>
         <activity android:name=".activities.NewEntryActivity" android:label="@string/activity_newEntry_title"/>
-<!--        <activity android:name=".activities.jsfh" />-->
+        <activity android:name=".activities.NewPositionActivity" android:label="@string/activity_newPosition_title" />
     </application>
 
 </manifest>

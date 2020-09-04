@@ -42,7 +42,7 @@ public fun<T> Iterable<T>.format(template: String): String {
 public fun<T> Iterable<T>.where(selector: (T) -> Boolean): Iterable<T> {
     val result = ArrayList<T>()
     for (e in this)
-//        if (selector(e))
+        if (selector(e))
             result.add(e)
     return result
 }

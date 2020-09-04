@@ -100,7 +100,7 @@ class NewEntryActivity: DBHolderActivity() {
                     _positions.first { p -> p.name == _selectedName && p.volume == _selectedVolume!!.toFloat() && p.price == _selectedPrice!!.toFloat() }.id
                 val count = newEntry_editCount.text.toString().toInt()
                 val date = Date(System.currentTimeMillis()).toString()
-                worker.addNewEntry(edId, count, date)
+                _worker.addNewEntry(edId, count, date)
                 finish()
             }
         }

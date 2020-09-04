@@ -4,49 +4,49 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newEntry_tEDName"
         android:text="@string/newEntry_tEDName"/>
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newEntry_spinEDName"
         android:spinnerMode="dropdown"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newEntry_tCount"
         android:text="@string/newEntry_tCount"/>
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newEntry_editCount"
         android:inputType="number"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newEntry_tVolume"
         android:text="@string/newEntry_sVolume"/>
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newEntry_spinVolume"
         android:spinnerMode="dropdown"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newEntry_tPrice"
         android:text="@string/newEntry_price"/>
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newEntry_spinPrice"
         android:spinnerMode="dropdown"/>
@@ -55,6 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/newEntry_bSubmit"
-        android:text="@string/newEntry_bSubmit"/>
+        android:text="@string/newEntry_bSubmit"
+        android:layout_gravity="center"/>
 
 </LinearLayout>

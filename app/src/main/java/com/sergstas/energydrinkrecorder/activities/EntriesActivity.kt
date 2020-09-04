@@ -1,22 +1,18 @@
 package com.sergstas.energydrinkrecorder.activities
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.sergstas.energydrinkrecorder.R
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity
-import com.sergstas.energydrinkrecorder.data.DBWorker
-import com.sergstas.energydrinkrecorder.data.TablesTemplates
 import com.sergstas.energydrinkrecorder.fragments.EntriesListFragment
 import com.sergstas.energydrinkrecorder.models.EntryInfo
 import com.sergstas.extensions.toArrayList
-import com.sergstas.lib.sql.dbcontrol.DBController
 
 @ExperimentalStdlibApi
 class EntriesActivity: DBHolderActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entries)
-        val data = worker.getAllEntryInfo()
+        val data = _worker.getAllEntryInfo()
         val grouped = groupByDate(data)
         for (rows in grouped)
             addFragment(rows)
