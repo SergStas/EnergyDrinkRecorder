@@ -63,11 +63,21 @@ class EntriesActivity: DBHolderActivity() {
                             supportFragmentManager.beginTransaction().remove(fragment).commit()
             }
         })
-        bar.setRemoveAllOnClickListener(View.OnClickListener{}) //TODO: implement
+        bar.setRemoveAllOnClickListener(View.OnClickListener{
+            removeAll()
+        })
     }
 
     private fun makeToast() {
         //TODO: implement
+    }
+
+    private fun removeAll() {
+        _worker.clearEntries()
+        for (fragment in _fragments)
+            supportFragmentManager.beginTransaction().remove(fragment).commit()
+        _fragments.clear()
+        var e = _worker.getAllEntryInfo()
     }
 
     /*private fun reloadFragment(fragment: Fragment, id: Int) {

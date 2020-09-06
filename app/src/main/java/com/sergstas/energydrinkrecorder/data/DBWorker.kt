@@ -75,4 +75,8 @@ class DBWorker public constructor(controller: DBController) {
         val position = _controller.selectBy(POSITIONS_ID, "_id", edId)!!.first()
         return EntryInfo(entry, position)
     }
+
+    fun clearEntries(): Boolean {
+        return _controller.tryClear(ENTRIES_ID)
+    }
 }

@@ -34,7 +34,8 @@ class DBController public constructor(context: Context) {
         val db = _helpers[tableId]!!.writableDatabase
         val query = String.format(StrConstants.QUERY_ADD, table!!.name, table!!.columnsParamsString, row.values.format(row.valuesParamsString!!))
         return try {
-            db.rawQuery(query, null)
+            val cursor = db.rawQuery(query, null)
+            cursor.close()
             true
         } catch (e: Exception) {
             false
@@ -52,7 +53,8 @@ class DBController public constructor(context: Context) {
         val query = String.format(StrConstants.QUERY_DELETE_FROM_WHERE, table.name, columnName,
             if (column.type == String::class) "`$castedId`" else castedId.toString())
         return try {
-            db.rawQuery(query, null)
+            //db.rawQuery(query, null)
+            db.delete(tableId, "$columnName = ${if (column.type == String::class) "`$castedId`" else castedId.toString()}", null)
             true
         }
         catch (e: Exception) {
@@ -64,7 +66,9 @@ class DBController public constructor(context: Context) {
         if (!_tables.containsKey(tableId))
             return false
         return try {
-            _helpers[tableId]!!.writableDatabase.rawQuery(String.format(StrConstants.QUERY_DELETE_ALL, _tables[tableId]!!.name), null)
+           _helpers[tableId]!!.writableDatabase
+                //.rawQuery(String.format(StrConstants.QUERY_DELETE_ALL, _tables[tableId]!!.name), null)
+                .delete(tableId, null, null)
             true
         }
         catch (e: Exception) {
@@ -94,6 +98,7 @@ class DBController public constructor(context: Context) {
                 return null
             result.add(row)
         }
+        cursor.close()
         return result
     }
 
@@ -103,13 +108,15 @@ class DBController public constructor(context: Context) {
             throw Exception("Table key $tableId was not found in DBController")
         val result = ArrayList<Row>()
         val table = _tables[tableId]!!
-        val cursor = _helpers[tableId]!!.readableDatabase.rawQuery(String.format(StrConstants.QUERY_SELECT_ALL, table.name), null)
+        val cursor = _helpers[tableId]!!.readableDatabase
+            .rawQuery(String.format(StrConstants.QUERY_SELECT_ALL, table.name), null)
         while (cursor.moveToNext()) {
             val row = Row(table)
             if (!row.fillFromCursor(cursor))
                 throw DataFormatException("Failed to fill row from cursor")
             result.add(row)
         }
+        cursor.close()
         return result
     }
 }
