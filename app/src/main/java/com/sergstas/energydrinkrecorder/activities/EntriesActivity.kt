@@ -6,18 +6,21 @@ import androidx.fragment.app.Fragment
 import com.sergstas.energydrinkrecorder.R
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity
 import com.sergstas.energydrinkrecorder.fragments.EntriesListFragment
+import com.sergstas.energydrinkrecorder.fragments.EntriesScrollFragment
 import com.sergstas.energydrinkrecorder.fragments.RemoveBarFragment
 import com.sergstas.energydrinkrecorder.models.EntryInfo
 import com.sergstas.extensions.select
 import com.sergstas.extensions.toArrayList
-import kotlinx.android.synthetic.main.activity_entries.*
-import kotlinx.android.synthetic.main.fragment_entrieslist.*
 import java.lang.Exception
 import java.util.HashSet
 
 @ExperimentalStdlibApi
 class EntriesActivity: DBHolderActivity() {
-    private val _ids = HashMap<HashSet<Int>, Fragment>()
+    companion object {
+        const val ENTRIES_LIST_ARG_KEY = "rows"
+    }
+
+    private val _fragments = ArrayList<EntriesScrollFragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,12 +34,11 @@ class EntriesActivity: DBHolderActivity() {
 
     private fun addFragment(entries: ArrayList<EntryInfo>) {
         val bundle = Bundle()
-        bundle.putParcelableArrayList("rows", entries)
-        val fragment = EntriesListFragment()
-        var set = HashSet(entries.select { info -> info.entryId }.toArrayList())
-        _ids[set] = fragment
+        bundle.putParcelableArrayList(ENTRIES_LIST_ARG_KEY, entries)
+        val fragment = EntriesScrollFragment()
+        _fragments.add(fragment)
         fragment.arguments = bundle
-        supportFragmentManager.beginTransaction().add(R.id.entries_list, fragment, "").commit()
+        supportFragmentManager.beginTransaction().add(R.id.entries_list, fragment).commit()
     }
 
     private fun groupByDate(raw: ArrayList<EntryInfo>): ArrayList<ArrayList<EntryInfo>> {
@@ -47,29 +49,32 @@ class EntriesActivity: DBHolderActivity() {
         return result
     }
 
-    private fun setRemoveBar() { //TODO: debug, refactor, finish
-        val bar = RemoveBarFragment() //TODO: replace Sets to single ids
+    private fun setRemoveBar() {
+        val bar = RemoveBarFragment() //TODO: fix layout
         supportFragmentManager.beginTransaction().add(R.id.entries_removeBarHolder, bar).commit()
         bar.setRemoveIdOnClickListener(View.OnClickListener{
             val id = bar.getSelectedId()
             if (id != null) {
-                if (!_worker.tryRemovePosition(id))
-                    throw Exception()
-                val set = _ids.keys.first { set -> set.contains(id) }
-                val fragment = _ids[set]
-                _ids.remove(set)
-                set.remove(id)
-                reloadFragment(fragment!!, id)
+                if (!_worker.tryRemovePosition(id)) //TODO: debug removing from db
+                    makeToast()
+                else
+                    for (fragment in _fragments)
+                        if (fragment.tryRemoveFragmentById(id) && fragment.isEmpty())
+                            supportFragmentManager.beginTransaction().remove(fragment).commit()
             }
         })
-        bar.setRemoveAllOnClickListener(View.OnClickListener{})
+        bar.setRemoveAllOnClickListener(View.OnClickListener{}) //TODO: implement
     }
 
-    private fun reloadFragment(fragment: Fragment, id: Int) {
+    private fun makeToast() {
+        //TODO: implement
+    }
+
+    /*private fun reloadFragment(fragment: Fragment, id: Int) {
         val newFragment = EntriesListFragment()
         val bundle = Bundle()
-        bundle.putParcelableArrayList("rows", groupByDate(_worker.getAllEntryInfo()).first { list -> list.select { info -> info.entryId }.contains(id) })
+        bundle.putParcelableArrayList(ENTRIES_LIST_ARG_KEY, groupByDate(_worker.getAllEntryInfo()).first { list -> list.select { info -> info.entryId }.contains(id) })
         newFragment.arguments = bundle
         supportFragmentManager.beginTransaction().remove(fragment).add(R.id.entries_list, newFragment).commit()
-    }
+    }*/
 }

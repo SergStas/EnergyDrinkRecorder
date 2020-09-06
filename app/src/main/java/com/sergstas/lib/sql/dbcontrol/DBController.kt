@@ -7,6 +7,7 @@ import com.sergstas.lib.sql.models.Row
 import com.sergstas.lib.sql.models.TableInfo
 import com.sergstas.lib.sql.res.StrConstants
 import java.lang.Exception
+import java.util.zip.DataFormatException
 import kotlin.reflect.cast
 
 class DBController public constructor(context: Context) {
@@ -47,7 +48,7 @@ class DBController public constructor(context: Context) {
         val table = _tables[tableId]!!
         val column = table.getColumn(columnName)!!
         val castedId = (column.type).cast(value)
-        val db = _helpers[tableId]!!.readableDatabase
+        val db = _helpers[tableId]!!.writableDatabase//readableDatabase
         val query = String.format(StrConstants.QUERY_DELETE_FROM_WHERE, table.name, columnName,
             if (column.type == String::class) "`$castedId`" else castedId.toString())
         return try {
@@ -97,16 +98,16 @@ class DBController public constructor(context: Context) {
     }
 
     @ExperimentalStdlibApi
-    public fun getAllPositions(tableId: String): ArrayList<Row>? {
+    public fun getAllPositions(tableId: String): ArrayList<Row> {
         if (!_tables.containsKey(tableId))
-            return null
+            throw Exception("Table key $tableId was not found in DBController")
         val result = ArrayList<Row>()
         val table = _tables[tableId]!!
         val cursor = _helpers[tableId]!!.readableDatabase.rawQuery(String.format(StrConstants.QUERY_SELECT_ALL, table.name), null)
         while (cursor.moveToNext()) {
             val row = Row(table)
             if (!row.fillFromCursor(cursor))
-                return null
+                throw DataFormatException("Failed to fill row from cursor")
             result.add(row)
         }
         return result

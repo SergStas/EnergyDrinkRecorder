@@ -14,8 +14,8 @@ import kotlinx.android.synthetic.main.fragment_entrieslist.view.*
 import kotlinx.android.synthetic.main.fragment_entrybar.view.*
 import java.util.ArrayList
 
-class EntriesListFragment: ListFragment() { //TODO: Replace with LinearLayout, use EntryBar items as fragments
-    private var _rows: ArrayList<EntryInfo>? = null
+class EntriesListFragment: ListFragment() {
+    /*private var _rows: ArrayList<EntryInfo>? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _rows = arguments!!.getParcelableArrayList<EntryInfo>("rows")
@@ -49,5 +49,5 @@ class EntriesListFragment: ListFragment() { //TODO: Replace with LinearLayout, u
             }
             return bar
         }
-    }
+    }*/
 }

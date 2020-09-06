@@ -10,6 +10,7 @@ import com.sergstas.lib.sql.dbcontrol.DBController
 import com.sergstas.lib.sql.models.Row
 import java.lang.Exception
 import java.sql.Date
+import java.util.zip.DataFormatException
 
 @ExperimentalStdlibApi
 class DBWorker public constructor(controller: DBController) {
@@ -36,15 +37,15 @@ class DBWorker public constructor(controller: DBController) {
     }
 
     fun getAllPosInfo(): ArrayList<PositionInfo> {
-        return _controller.getAllPositions(POSITIONS_ID)!!.select { row -> PositionInfo(row) }.toArrayList()
+        return _controller.getAllPositions(POSITIONS_ID).select { row -> PositionInfo(row) }.toArrayList()
     }
 
     fun getAllEntryInfo(): ArrayList<EntryInfo> {
-        return _controller.getAllPositions(ENTRIES_ID)!!.select { row -> entryRowToEntryInfo(row) }.toArrayList()
+        return _controller.getAllPositions(ENTRIES_ID).select { row -> entryRowToEntryInfo(row) }.toArrayList()
     }
 
     fun getEDIdByName(name: String): Int {
-        return (_controller.getAllPositions(POSITIONS_ID)!!
+        return (_controller.getAllPositions(POSITIONS_ID)
             .first { pos -> pos.getValue("name") as String == name }
             .getValue("_id")) as Int
     }
@@ -68,6 +69,8 @@ class DBWorker public constructor(controller: DBController) {
     }
 
     private fun entryRowToEntryInfo(entry: Row): EntryInfo {
+        if (!entry.isFilled)
+            throw DataFormatException("Unable to create EntryInfo object from $entry: row wasn't filled")
         val edId = entry.getValue("edId") as Int
         val position = _controller.selectBy(POSITIONS_ID, "_id", edId)!!.first()
         return EntryInfo(entry, position)
