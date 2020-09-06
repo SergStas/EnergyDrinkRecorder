@@ -33,7 +33,7 @@ class DBController public constructor(context: Context) {
         val db = _helpers[tableId]!!.writableDatabase
         val query = String.format(StrConstants.QUERY_ADD, table!!.name, table!!.columnsParamsString, row.values.format(row.valuesParamsString!!))
         return try {
-            db.execSQL(query)
+            db.rawQuery(query, null)
             true
         } catch (e: Exception) {
             false
@@ -51,7 +51,7 @@ class DBController public constructor(context: Context) {
         val query = String.format(StrConstants.QUERY_DELETE_FROM_WHERE, table.name, columnName,
             if (column.type == String::class) "`$castedId`" else castedId.toString())
         return try {
-            db.execSQL(query, null)
+            db.rawQuery(query, null)
             true
         }
         catch (e: Exception) {
@@ -63,7 +63,7 @@ class DBController public constructor(context: Context) {
         if (!_tables.containsKey(tableId))
             return false
         return try {
-            _helpers[tableId]!!.writableDatabase.execSQL(String.format(StrConstants.QUERY_DELETE_ALL, _tables[tableId]!!.name))
+            _helpers[tableId]!!.writableDatabase.rawQuery(String.format(StrConstants.QUERY_DELETE_ALL, _tables[tableId]!!.name), null)
             true
         }
         catch (e: Exception) {

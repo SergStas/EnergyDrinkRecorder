@@ -11,22 +11,22 @@ import kotlinx.android.synthetic.main.fragment_remove_bar.view.*
 import java.lang.Exception
 
 class RemoveBarFragment: Fragment() {
-    private lateinit var _removeIdUnit: Unit
-    private lateinit var _removeAllUnit: Unit
+    private lateinit var _removeIdListener: View.OnClickListener
+    private lateinit var _removeAllListener: View.OnClickListener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_remove_bar, container, false)
-        view.removeBar_bRemoveId.setOnClickListener { _removeIdUnit }
-        view.removeBar_bRemoveAll.setOnClickListener { _removeAllUnit }
+        view.removeBar_bRemoveId.setOnClickListener(_removeIdListener)
+        view.removeBar_bRemoveAll.setOnClickListener(_removeAllListener)
         return view
     }
 
-    fun setRemoveIdOnClickListener(listener: Unit) {
-        _removeIdUnit = listener
+    fun setRemoveIdOnClickListener(listener: View.OnClickListener) {
+        _removeIdListener = listener
     }
 
-    fun setRemoveAllOnClickListener(listener: Unit) {
-        _removeAllUnit = listener
+    fun setRemoveAllOnClickListener(listener: View.OnClickListener) {
+        _removeAllListener = listener
     }
 
     fun getSelectedId(): Int? {

@@ -1,6 +1,7 @@
 package com.sergstas.energydrinkrecorder.activities
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.sergstas.energydrinkrecorder.R
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity
@@ -11,6 +12,7 @@ import com.sergstas.extensions.select
 import com.sergstas.extensions.toArrayList
 import kotlinx.android.synthetic.main.activity_entries.*
 import kotlinx.android.synthetic.main.fragment_entrieslist.*
+import java.lang.Exception
 import java.util.HashSet
 
 @ExperimentalStdlibApi
@@ -46,18 +48,21 @@ class EntriesActivity: DBHolderActivity() {
     }
 
     private fun setRemoveBar() { //TODO: debug, refactor, finish
-        val bar = RemoveBarFragment()
-        bar.setRemoveIdOnClickListener(run{
+        val bar = RemoveBarFragment() //TODO: replace Sets to single ids
+        supportFragmentManager.beginTransaction().add(R.id.entries_removeBarHolder, bar).commit()
+        bar.setRemoveIdOnClickListener(View.OnClickListener{
             val id = bar.getSelectedId()
             if (id != null) {
-                _worker.tryRemovePosition(id)
+                if (!_worker.tryRemovePosition(id))
+                    throw Exception()
                 val set = _ids.keys.first { set -> set.contains(id) }
                 val fragment = _ids[set]
                 _ids.remove(set)
+                set.remove(id)
                 reloadFragment(fragment!!, id)
             }
         })
-        supportFragmentManager.beginTransaction().add(R.id.entries_removeBarHolder, bar).commit()
+        bar.setRemoveAllOnClickListener(View.OnClickListener{})
     }
 
     private fun reloadFragment(fragment: Fragment, id: Int) {
