@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.sergstas.energydrinkrecorder.R
+import com.sergstas.energydrinkrecorder.common.Common.Companion.makeToast
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity
 import com.sergstas.energydrinkrecorder.models.PositionInfo
 import com.sergstas.extensions.select
@@ -13,6 +14,7 @@ import com.sergstas.extensions.where
 import kotlinx.android.synthetic.main.activity_new_entry.*
 import java.sql.Date
 import kotlin.collections.ArrayList
+import android.widget.AdapterView.OnItemSelectedListener as jopa
 
 
 @ExperimentalStdlibApi
@@ -46,7 +48,7 @@ class NewEntryActivity: DBHolderActivity() {
         val adapter = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, _names)
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
         newEntry_spinEDName.adapter = adapter
-        newEntry_spinEDName.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        newEntry_spinEDName.onItemSelectedListener = object : jopa {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, i: Int, id: Long) {
@@ -67,7 +69,7 @@ class NewEntryActivity: DBHolderActivity() {
         val adapter = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, _volumes)
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
         newEntry_spinVolume.adapter = adapter
-        newEntry_spinVolume.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        newEntry_spinVolume.onItemSelectedListener = object : jopa {
             override fun onNothingSelected(parent: AdapterView<*>?) { }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, i: Int, id: Long) {
@@ -84,7 +86,7 @@ class NewEntryActivity: DBHolderActivity() {
         val adapter = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, _prices)
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
         newEntry_spinPrice.adapter = adapter
-        newEntry_spinPrice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        newEntry_spinPrice.onItemSelectedListener = object : jopa {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -95,14 +97,17 @@ class NewEntryActivity: DBHolderActivity() {
 
     private fun setListener() {
         newEntry_bSubmit.setOnClickListener {
-            if (_selectedName != null && _selectedVolume != null && _selectedPrice != null) {
+            if (_selectedName != null && _selectedVolume != null && _selectedPrice != null && newEntry_editCount.text.toString() != "") {
                 val edId =
                     _positions.first { p -> p.name == _selectedName && p.volume == _selectedVolume!!.toFloat() && p.price == _selectedPrice!!.toFloat() }.id
                 val count = newEntry_editCount.text.toString().toInt()
                 val date = Date(System.currentTimeMillis()).toString()
-                _worker.addNewEntry(edId, count, date)
+                worker.addNewEntry(edId, count, date)
+                makeToast(this, getString(R.string.toast_newEntry_success))
                 finish()
             }
+            else
+                makeToast(this, getString(R.string.toast_newEntry_fail))
         }
     }
 }

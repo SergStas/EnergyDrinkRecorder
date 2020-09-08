@@ -2,6 +2,8 @@ package com.sergstas.energydrinkrecorder.activities
 
 import android.os.Bundle
 import com.sergstas.energydrinkrecorder.R
+import com.sergstas.energydrinkrecorder.common.Common
+import com.sergstas.energydrinkrecorder.common.Common.Companion.makeToast
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity
 import kotlinx.android.synthetic.main.activity_new_position.*
 import java.lang.Exception
@@ -20,10 +22,11 @@ class NewPositionActivity: DBHolderActivity() {
                 val name = newPosition_editName.text.toString()
                 val volume = newPosition_editVolume.text.toString().toFloat()
                 val price = newPosition_editPrice.text.toString().toFloat()
-                _worker.addNewPosition(name, volume, price)
-                finish() //TODO: toast
+                worker.addNewPosition(name, volume, price)
+                makeToast(this, getString(R.string.toast_newPosition_success))
+                finish()
             } catch (e: Exception) {
-                //TODO: toast
+                makeToast(this, getString(R.string.toast_newPosition_fail))
             }
         }
     }

@@ -37,4 +37,12 @@
     <string name="removeBar_tId">Id:</string>
     <string name="removeBar_bRemoveId">Remove id</string>
     <string name="removeBar_bClearAll">Clear all</string>
+    <string name="toast_entries_clearAll_failed">Failed to remove all entries</string>
+    <string name="toast_entries_removeId_fail">Failed to remove entry at current id</string>
+    <string name="toast_entries_removeId_success">Entry removed successfully</string>
+    <string name="toast_entries_removeAll_success">Entries removed successfully</string>
+    <string name="toast_newEntry_success">Entry created successfully</string>
+    <string name="toast_newEntry_fail">Incorrect data, failed to create entry</string>
+    <string name="toast_newPosition_success">Position data added successfully</string>
+    <string name="toast_newPosition_fail">Incorrect values, failed to add position data to DB</string>
 </resources>

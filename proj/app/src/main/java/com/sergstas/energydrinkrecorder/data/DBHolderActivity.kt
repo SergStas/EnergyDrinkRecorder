@@ -11,7 +11,7 @@ abstract class DBHolderActivity: AppCompatActivity() {
     protected val EPSILON = 1e-7
 
     protected val _controller = DBController(this)
-    protected val _worker = DBWorker(_controller)
+    protected val worker = DBWorker(_controller)
 
     init { initDB() }
 

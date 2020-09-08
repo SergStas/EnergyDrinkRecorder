@@ -11,7 +11,7 @@ class PositionsActivity: DBHolderActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_positions)
-        val data = _worker.getAllPosInfo()
+        val data = worker.getAllPosInfo()
         addFragments(data)
     }
 

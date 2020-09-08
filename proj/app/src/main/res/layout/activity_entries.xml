@@ -4,20 +4,32 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical"
-        android:id="@+id/entries_list"/>
+        android:id="@+id/entries_scroll"
+        app:layout_constraintBottom_toTopOf="@id/entries_removeBarHolder"
+        app:layout_constraintVertical_weight="8">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/entries_listHolder"
+            android:orientation="vertical"/>
+
+    </ScrollView>
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/entries_scroll"
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/entries_removeBarHolder"
-        android:orientation="vertical"/>
+        android:orientation="vertical"
+        app:layout_constraintVertical_weight="1"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

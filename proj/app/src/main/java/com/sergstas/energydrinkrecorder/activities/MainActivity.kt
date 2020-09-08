@@ -29,7 +29,7 @@ class MainActivity : DBHolderActivity() {
         }
         navigation_bGoTo_newEntry.setOnClickListener {
             val intent = Intent(this, NewEntryActivity::class.java)
-            intent.putExtra("positions", _worker.getAllPosInfo())
+            intent.putExtra("positions", worker.getAllPosInfo())
             startActivity(intent)
         }
         navigation_bGoTo_newPosition.setOnClickListener {
@@ -44,7 +44,7 @@ class MainActivity : DBHolderActivity() {
     }
 
     private fun updateDataBar() { //TODO: total statistics
-        val daily = _worker.getStatsByDay()
+        val daily = worker.getStatsByDay()
         if (daily == null)
             statistics_tData.text = getString(R.string.statistics_tData_failed)
         else

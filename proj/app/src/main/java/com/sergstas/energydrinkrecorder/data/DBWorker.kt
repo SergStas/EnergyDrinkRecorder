@@ -1,5 +1,6 @@
 package com.sergstas.energydrinkrecorder.data
 
+import com.sergstas.energydrinkrecorder.activities.MainActivity
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity.TablesId.Companion.ENTRIES_ID
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity.TablesId.Companion.POSITIONS_ID
 import com.sergstas.energydrinkrecorder.models.EntryInfo
@@ -66,6 +67,10 @@ class DBWorker public constructor(controller: DBController) {
         if (_controller.selectBy(ENTRIES_ID, "_id", id)?.count() != 0)
             return _controller.tryRemoveBy(ENTRIES_ID, "_id", id)
         return false
+    }
+
+    fun tryRemoveAllEntries(): Boolean {
+        return _controller.tryClear(ENTRIES_ID)
     }
 
     private fun entryRowToEntryInfo(entry: Row): EntryInfo {

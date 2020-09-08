@@ -2,17 +2,13 @@ package com.sergstas.energydrinkrecorder.activities
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import com.sergstas.energydrinkrecorder.R
+import com.sergstas.energydrinkrecorder.common.Common.Companion.makeToast
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity
-import com.sergstas.energydrinkrecorder.fragments.EntriesListFragment
 import com.sergstas.energydrinkrecorder.fragments.EntriesScrollFragment
 import com.sergstas.energydrinkrecorder.fragments.RemoveBarFragment
 import com.sergstas.energydrinkrecorder.models.EntryInfo
-import com.sergstas.extensions.select
 import com.sergstas.extensions.toArrayList
-import java.lang.Exception
-import java.util.HashSet
 
 @ExperimentalStdlibApi
 class EntriesActivity: DBHolderActivity() {
@@ -25,7 +21,7 @@ class EntriesActivity: DBHolderActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entries)
-        val data = _worker.getAllEntryInfo()
+        val data = worker.getAllEntryInfo()
         val grouped = groupByDate(data)
         for (rows in grouped)
             addFragment(rows)
@@ -38,7 +34,7 @@ class EntriesActivity: DBHolderActivity() {
         val fragment = EntriesScrollFragment()
         _fragments.add(fragment)
         fragment.arguments = bundle
-        supportFragmentManager.beginTransaction().add(R.id.entries_list, fragment).commit()
+        supportFragmentManager.beginTransaction().add(R.id.entries_listHolder, fragment).commit()
     }
 
     private fun groupByDate(raw: ArrayList<EntryInfo>): ArrayList<ArrayList<EntryInfo>> {
@@ -50,23 +46,33 @@ class EntriesActivity: DBHolderActivity() {
     }
 
     private fun setRemoveBar() {
-        val bar = RemoveBarFragment() //TODO: fix layout
+        val bar = RemoveBarFragment()
         supportFragmentManager.beginTransaction().add(R.id.entries_removeBarHolder, bar).commit()
-        bar.setRemoveIdOnClickListener(View.OnClickListener{
+        bar.setRemoveIdOnClickListener(View.OnClickListener {
             val id = bar.getSelectedId()
             if (id != null) {
-                if (!_worker.tryRemovePosition(id)) //TODO: debug removing from db
-                    makeToast()
-                else
+                if (!worker.tryRemovePosition(id))
+                    makeToast(this, getString(R.string.toast_entries_removeId_fail))
+                else {
                     for (fragment in _fragments)
                         if (fragment.tryRemoveFragmentById(id) && fragment.isEmpty())
                             supportFragmentManager.beginTransaction().remove(fragment).commit()
+                    makeToast(this, getString(R.string.toast_entries_removeId_success))
+                }
             }
         })
-        bar.setRemoveAllOnClickListener(View.OnClickListener{}) //TODO: implement
+        bar.setRemoveAllOnClickListener(View.OnClickListener{
+            removeAll()
+        })
     }
 
-    private fun makeToast() {
-        //TODO: implement
+    private fun removeAll() {
+        if (!worker.tryRemoveAllEntries())
+            makeToast(this, getString(R.string.toast_entries_clearAll_failed))
+        else {
+            for (fragment in _fragments)
+                supportFragmentManager.beginTransaction().remove(fragment).commit()
+            makeToast(this, getString(R.string.toast_entries_removeAll_success))
+        }
     }
 }
