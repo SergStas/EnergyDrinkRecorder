@@ -69,12 +69,4 @@ class EntriesActivity: DBHolderActivity() {
     private fun makeToast() {
         //TODO: implement
     }
-
-    /*private fun reloadFragment(fragment: Fragment, id: Int) {
-        val newFragment = EntriesListFragment()
-        val bundle = Bundle()
-        bundle.putParcelableArrayList(ENTRIES_LIST_ARG_KEY, groupByDate(_worker.getAllEntryInfo()).first { list -> list.select { info -> info.entryId }.contains(id) })
-        newFragment.arguments = bundle
-        supportFragmentManager.beginTransaction().remove(fragment).add(R.id.entries_list, newFragment).commit()
-    }*/
 }

@@ -8,7 +8,6 @@ import com.sergstas.lib.sql.dbcontrol.DBController
 
 @ExperimentalStdlibApi
 abstract class DBHolderActivity: AppCompatActivity() {
-
     protected val EPSILON = 1e-7
 
     protected val _controller = DBController(this)
