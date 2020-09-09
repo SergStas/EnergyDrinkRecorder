@@ -19,22 +19,7 @@ class DBWorker public constructor(controller: DBController) {
 
     fun getStatsByDay(): Pair<Double, Double>? {
         val curDate = Date(System.currentTimeMillis()).toString()
-        val rows = _controller.selectBy(ENTRIES_ID, "date", curDate)
-            ?: return Pair(0.0, 0.0)
-        var liters = 0.0
-        var cost = 0.0
-        for (row in rows)
-            try {
-                val count = row.getValue("count") as Int
-                val id = row.getValue("edId") as Int
-                val edData = _controller.selectBy(POSITIONS_ID, "_id", id)!!.first()
-                liters += count * (edData.getValue("volume") as Float)
-                cost += count * (edData.getValue("price") as Float)
-            }
-            catch (e: Exception) {
-                return null
-            }
-        return Pair(liters, cost)
+        return countVolumeAndPriceFrom(_controller.selectBy(ENTRIES_ID, "date", curDate))
     }
 
     fun getAllPosInfo(): ArrayList<PositionInfo> {
@@ -43,6 +28,10 @@ class DBWorker public constructor(controller: DBController) {
 
     fun getAllEntryInfo(): ArrayList<EntryInfo> {
         return _controller.getAllPositions(ENTRIES_ID).select { row -> entryRowToEntryInfo(row) }.toArrayList()
+    }
+
+    fun getTotalStats(): Pair<Double, Double>? {
+        return countVolumeAndPriceFrom(_controller.getAllPositions(ENTRIES_ID))
     }
 
     fun getEDIdByName(name: String): Int {
@@ -79,5 +68,24 @@ class DBWorker public constructor(controller: DBController) {
         val edId = entry.getValue("edId") as Int
         val position = _controller.selectBy(POSITIONS_ID, "_id", edId)!!.first()
         return EntryInfo(entry, position)
+    }
+
+    private fun countVolumeAndPriceFrom(rows: Iterable<Row>?): Pair<Double, Double>? {
+        if (rows == null)
+            return Pair(0.0, 0.0)
+        var liters = 0.0
+        var cost = 0.0
+        for (row in rows)
+            try {
+                val count = row.getValue("count") as Int
+                val id = row.getValue("edId") as Int
+                val edData = _controller.selectBy(POSITIONS_ID, "_id", id)!!.first()
+                liters += count * (edData.getValue("volume") as Float)
+                cost += count * (edData.getValue("price") as Float)
+            }
+            catch (e: Exception) {
+                return null
+            }
+        return Pair(liters, cost)
     }
 }

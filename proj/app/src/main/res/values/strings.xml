@@ -6,8 +6,10 @@
     <string name="statistics_tData_loading">Loading data...</string>
     <string name="statistics_bSwitch_total">Show total statistics</string>
     <string name="statistics_bMore">All entries</string>
-    <string name="statistics_tData_today_placeholder">Today you drank %s liters and spended %s rub</string>
-    <string name="statistics_tData_today_noData">No entries by this day, good job</string>
+    <string name="statistics_tData_daily_placeholder">Today you drank %s liters and wasted %s rub</string>
+    <string name="statistics_tData_total_placeholder">You drank %s liters and wasted %s rub by all recorded time</string>
+    <string name="statistics_tData_daily_noData">No entries by this day, good job</string>
+    <string name="statistics_tData_total_noData">Still no entries in DB, understandable</string>
     <string name="statistics_tData_failed">Failed to access data</string>
     <string name="entriesActivity_title">Entries</string>
     <string name="fragment_entryBar_noData">---</string>

@@ -11,6 +11,8 @@ import kotlin.math.absoluteValue
 
 @ExperimentalStdlibApi
 class MainActivity : DBHolderActivity() {
+    private var _total = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,6 +24,10 @@ class MainActivity : DBHolderActivity() {
         statistics_bMore.setOnClickListener {
             val intent = Intent(this, EntriesActivity::class.java)
             startActivity(intent)
+        }
+        statistics_bSwitch.setOnClickListener {
+            _total = !_total
+            updateDataBar()
         }
         navigation_bGoTo_positionsList.setOnClickListener {
             val intent = Intent(this, PositionsActivity::class.java)
@@ -43,18 +49,20 @@ class MainActivity : DBHolderActivity() {
         updateDataBar()
     }
 
-    private fun updateDataBar() { //TODO: total statistics
-        val daily = worker.getStatsByDay()
-        if (daily == null)
+    private fun updateDataBar() {
+        val data = if (_total) worker.getTotalStats() else worker.getStatsByDay()
+        if (data == null)
             statistics_tData.text = getString(R.string.statistics_tData_failed)
         else
             statistics_tData.text =
-                if (daily.first.absoluteValue > EPSILON || daily.second.absoluteValue > EPSILON)
+                if (data.first.absoluteValue > EPSILON || data.second.absoluteValue > EPSILON)
                     String.format(
-                        getString(R.string.statistics_tData_today_placeholder),
-                        daily.first.round(2),
-                        daily.second.round(2)
+                        getString(if (_total) R.string.statistics_tData_total_placeholder
+                            else R.string.statistics_tData_daily_placeholder),
+                        data.first.round(2),
+                        data.second.round(2)
                     )
-                else getString(R.string.statistics_tData_today_noData)
+                else getString(if (_total) R.string.statistics_tData_total_noData
+                    else R.string.statistics_tData_daily_noData)
     }
 }
