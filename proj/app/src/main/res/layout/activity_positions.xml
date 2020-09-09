@@ -4,19 +4,40 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/positions_list"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="0dp"
+        android:id="@+id/positions_scroll"
         app:layout_constraintStart_toStartOf="parent"
-        android:orientation="vertical">
+        app:layout_constraintVertical_weight="8"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/positions_removeBarHolder">
 
-        <fragment
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:name="com.sergstas.energydrinkrecorder.fragments.PositionBarFragment"
-            android:id="@+id/positions_header"/>
+            android:id="@+id/positions_list"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <fragment
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:name="com.sergstas.energydrinkrecorder.fragments.PositionBarFragment"
+                android:id="@+id/positions_header"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:id="@+id/positions_removeBarHolder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintTop_toBottomOf="@id/positions_scroll"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

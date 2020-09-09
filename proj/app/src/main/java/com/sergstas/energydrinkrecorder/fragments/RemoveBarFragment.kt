@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.fragment_remove_bar.*
 import kotlinx.android.synthetic.main.fragment_remove_bar.view.*
 import java.lang.Exception
 
+//TODO: assert
 class RemoveBarFragment: Fragment() {
     private lateinit var _removeIdListener: View.OnClickListener
     private lateinit var _removeAllListener: View.OnClickListener

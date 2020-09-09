@@ -1,5 +1,6 @@
 package com.sergstas.energydrinkrecorder.data
 
+import androidx.core.content.contentValuesOf
 import com.sergstas.energydrinkrecorder.activities.MainActivity
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity.TablesId.Companion.ENTRIES_ID
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity.TablesId.Companion.POSITIONS_ID
@@ -53,6 +54,16 @@ class DBWorker public constructor(controller: DBController) {
     }
 
     fun tryRemovePosition(id: Int): Boolean {
+        if (_controller.selectBy(POSITIONS_ID, "_id", id)?.count() != 0)
+            return _controller.tryRemoveBy(POSITIONS_ID, "_id", id)
+        return false
+    }
+
+    fun tryRemoveAllPositions(): Boolean {
+        return _controller.tryClear(POSITIONS_ID)
+    }
+
+    fun tryRemoveEntry(id: Int): Boolean {
         if (_controller.selectBy(ENTRIES_ID, "_id", id)?.count() != 0)
             return _controller.tryRemoveBy(ENTRIES_ID, "_id", id)
         return false

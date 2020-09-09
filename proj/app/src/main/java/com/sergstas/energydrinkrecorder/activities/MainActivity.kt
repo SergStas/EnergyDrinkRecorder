@@ -4,11 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import com.sergstas.energydrinkrecorder.R
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity
+import com.sergstas.energydrinkrecorder.data.DBHolderActivity.TablesId.Companion.ENTRIES_ID
 import com.sergstas.extensions.round
 import kotlinx.android.synthetic.main.fragment_navigation.*
 import kotlinx.android.synthetic.main.fragment_statistics.*
 import kotlin.math.absoluteValue
 
+//TODO: multithreading
 @ExperimentalStdlibApi
 class MainActivity : DBHolderActivity() {
     private var _total = false

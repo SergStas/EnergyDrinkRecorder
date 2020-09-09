@@ -47,4 +47,8 @@
     <string name="toast_newEntry_fail">Incorrect data, failed to create entry</string>
     <string name="toast_newPosition_success">Position data added successfully</string>
     <string name="toast_newPosition_fail">Incorrect values, failed to add position data to DB</string>
+    <string name="toast_positions_removeId_fail">Failed to remove position</string>
+    <string name="toast_positions_removeAll_fail">Failed to remove all positions from DB</string>
+    <string name="toast_positions_removeId_success">Position deleted successfully</string>
+    <string name="toast_positions_removeAll_success">Positions DB cleaned successfully</string>
 </resources>

@@ -51,7 +51,7 @@ class EntriesActivity: DBHolderActivity() {
         bar.setRemoveIdOnClickListener(View.OnClickListener {
             val id = bar.getSelectedId()
             if (id != null) {
-                if (!worker.tryRemovePosition(id))
+                if (!worker.tryRemoveEntry(id))
                     makeToast(this, getString(R.string.toast_entries_removeId_fail))
                 else {
                     for (fragment in _fragments)
@@ -70,8 +70,10 @@ class EntriesActivity: DBHolderActivity() {
         if (!worker.tryRemoveAllEntries())
             makeToast(this, getString(R.string.toast_entries_clearAll_failed))
         else {
-            for (fragment in _fragments)
+            for (fragment in _fragments) {
                 supportFragmentManager.beginTransaction().remove(fragment).commit()
+                _fragments.remove(fragment)
+            }
             makeToast(this, getString(R.string.toast_entries_removeAll_success))
         }
     }
