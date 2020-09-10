@@ -19,6 +19,7 @@ class MainActivity : DBHolderActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         updateDataBar()
+        controller.tryClear(ENTRIES_ID)
         setListeners()
     }
 

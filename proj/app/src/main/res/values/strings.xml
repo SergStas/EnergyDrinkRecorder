@@ -51,4 +51,8 @@
     <string name="toast_positions_removeAll_fail">Failed to remove all positions from DB</string>
     <string name="toast_positions_removeId_success">Position deleted successfully</string>
     <string name="toast_positions_removeAll_success">Positions DB cleaned successfully</string>
+    <string name="dialog_title">Alert</string>
+    <string name="dialog_text_removeAll">Do you really want to remove all positions? All entries data also would be wiped</string>
+    <string name="dialog_decline">Decline</string>
+    <string name="dialog_accept">Accept</string>
 </resources>

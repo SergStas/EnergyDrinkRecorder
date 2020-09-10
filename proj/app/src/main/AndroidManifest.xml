@@ -20,6 +20,10 @@
         <activity android:name=".activities.PositionsActivity" android:label="@string/activity_positions_title"/>
         <activity android:name=".activities.NewEntryActivity" android:label="@string/activity_newEntry_title"/>
         <activity android:name=".activities.NewPositionActivity" android:label="@string/activity_newPosition_title" />
+        <activity
+            android:name=".fragments.DialogActivity"
+            android:theme="@style/Theme.AppCompat.Dialog"
+            android:label="@string/dialog_title"/>
     </application>
 
 </manifest>
