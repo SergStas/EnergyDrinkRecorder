@@ -8,41 +8,62 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/navigation_createNew_bar">
+        android:id="@+id/navigation_createNew_bar"
+        android:padding="20dp">
 
         <Button
             android:id="@+id/navigation_bGoTo_newEntry"
-            android:layout_marginHorizontal="20dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@id/navigation_bGoTo_newPosition"
+            android:minHeight="60dp"
             app:layout_constraintHorizontal_weight="1"
             android:text="@string/navigation_bGoTo_newEntry" />
 
         <Button
             android:id="@+id/navigation_bGoTo_newPosition"
-            android:layout_marginHorizontal="20dp"
+            android:minHeight="60dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/navigation_bGoTo_newEntry"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="1"
-            android:text="New Position" />
+            android:text="New Position"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:minHeight="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="10dp"
+            android:id="@+id/navigation_bAllEntries"
+            android:text="@string/statistics_bMore"
+            app:layout_constraintTop_toBottomOf="@id/navigation_bGoTo_newPosition"
+            app:layout_constraintEnd_toStartOf="@id/navigation_bGoTo_positionsList"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_weight="1"/>
+
+        <Button
+            android:id="@+id/navigation_bGoTo_positionsList"
+            android:minHeight="60dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/navigation_bAllEntries"
+            app:layout_constraintTop_toBottomOf="@id/navigation_bGoTo_newPosition"
+            android:text="@string/navigation_bGoTo_positionsData"
+            app:layout_constraintHorizontal_weight="1"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/navigation_bGoTo_positionsList"
-        android:layout_marginHorizontal="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/navigation_bGoTo_positionsData" />
 
     <!--<Button
         android:id="@+id/navigation_bGoTo_manageEntries"

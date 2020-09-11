@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -25,6 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:name="com.sergstas.energydrinkrecorder.fragments.PositionBarFragment"
+                android:layout_marginBottom="10dp"
                 android:id="@+id/positions_header"/>
 
         </LinearLayout>

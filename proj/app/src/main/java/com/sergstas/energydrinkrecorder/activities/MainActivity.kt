@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import com.sergstas.energydrinkrecorder.R
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity
-import com.sergstas.energydrinkrecorder.data.DBHolderActivity.TablesId.Companion.ENTRIES_ID
 import com.sergstas.extensions.round
 import kotlinx.android.synthetic.main.fragment_navigation.*
 import kotlinx.android.synthetic.main.fragment_statistics.*
@@ -23,7 +22,7 @@ class MainActivity : DBHolderActivity() {
     }
 
     private fun setListeners() {
-        statistics_bMore.setOnClickListener {
+        navigation_bAllEntries.setOnClickListener {
             val intent = Intent(this, EntriesActivity::class.java)
             startActivity(intent)
         }

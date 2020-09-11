@@ -7,9 +7,8 @@ import android.view.View
 import com.sergstas.energydrinkrecorder.R
 import com.sergstas.energydrinkrecorder.common.Common.Companion.makeToast
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity
-import com.sergstas.energydrinkrecorder.fragments.DialogActivity
-import com.sergstas.energydrinkrecorder.fragments.DialogActivity.Companion.REMOVE_ALL_REQUEST
-import com.sergstas.energydrinkrecorder.fragments.DialogActivity.Companion.REMOVE_ID_REQUEST
+import com.sergstas.energydrinkrecorder.activities.DialogActivity.Companion.REMOVE_ALL_REQUEST
+import com.sergstas.energydrinkrecorder.activities.DialogActivity.Companion.REMOVE_ID_REQUEST
 import com.sergstas.energydrinkrecorder.fragments.PositionBarFragment
 import com.sergstas.energydrinkrecorder.fragments.RemoveBarFragment
 import com.sergstas.energydrinkrecorder.models.PositionInfo

@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="30dp">
 
     <TextView
+        android:id="@+id/newEntry_tEDName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/newEntry_tEDName"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
         android:text="@string/newEntry_tEDName"/>
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newEntry_spinEDName"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
+        android:layout_marginBottom="20dp"
         android:spinnerMode="dropdown"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newEntry_tCount"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
         android:text="@string/newEntry_tCount"/>
 
     <EditText
@@ -26,36 +34,52 @@
         android:layout_height="wrap_content"
         android:id="@+id/newEntry_editCount"
         android:inputType="number"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
+        android:layout_marginBottom="20dp"
         android:text="1"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newEntry_tVolume"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
         android:text="@string/newEntry_sVolume"/>
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newEntry_spinVolume"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
+        android:layout_marginBottom="20dp"
         android:spinnerMode="dropdown"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newEntry_tPrice"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
         android:text="@string/newEntry_price"/>
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newEntry_spinPrice"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
+        android:layout_marginBottom="20dp"
         android:spinnerMode="dropdown"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newEntry_bSubmit"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="24sp"
+        android:paddingVertical="15dp"
         android:text="@string/newEntry_bSubmit"
         android:layout_gravity="center"/>
 

@@ -1,4 +1,4 @@
-package com.sergstas.energydrinkrecorder.fragments
+package com.sergstas.energydrinkrecorder.activities
 
 import android.app.Activity
 import android.content.Intent

@@ -1,49 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="30dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newPosition_tName"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
         android:text="@string/newPosition_tName"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newPosition_editName"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
+        android:layout_marginBottom="20dp"
         android:inputType="text"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newPosition_tVolume"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
         android:text="@string/newPosition_volume"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newPosition_editVolume"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
+        android:layout_marginBottom="20dp"
         android:inputType="numberDecimal"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newPosition_tPrice"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
         android:text="@string/newPosition_price"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newPosition_editPrice"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
+        android:layout_marginBottom="20dp"
         android:inputType="numberDecimal"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/newPosition_bSubmit"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="24sp"
+        android:paddingVertical="15dp"
         android:text="@string/newPosition_submit"/>
 
 </LinearLayout>
