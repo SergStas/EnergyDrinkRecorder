@@ -10,6 +10,9 @@ import java.lang.Exception
 
 class DialogActivity: AppCompatActivity() {
     companion object {
+        const val REMOVE_ALL_REQUEST = 0
+        const val REMOVE_ID_REQUEST = 1
+
         const val TEXT_ARG_KEY = "text"
         const val ACCEPT_ARG_KEY = "acceptStr"
         const val DECLINE_ARG_KEY = "declineStr"
@@ -33,9 +36,9 @@ class DialogActivity: AppCompatActivity() {
     }
 
     private fun finishActivity(result: Boolean) {
-        val intent = Intent()
-        intent.putExtra(REQUEST_RESULT_KEY, result)
-        setResult(Activity.RESULT_OK, intent)
+        val finishIntent = Intent()
+        finishIntent.putExtra(REQUEST_RESULT_KEY, result)
+        setResult(Activity.RESULT_OK, finishIntent)
         finish()
     }
 

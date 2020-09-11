@@ -43,7 +43,7 @@ class DBController public constructor(context: Context) {
     }
 
     @ExperimentalStdlibApi
-    public fun tryRemoveBy(tableId: String, columnName: String, value: Any?): Boolean {
+    public fun removeBy(tableId: String, columnName: String, value: Any?): Boolean {
         if (!_tables.containsKey(tableId) || !_tables[tableId]!!.containsColumn(columnName))
             return false
         val table = _tables[tableId]!!

@@ -1,7 +1,5 @@
 package com.sergstas.energydrinkrecorder.data
 
-import androidx.core.content.contentValuesOf
-import com.sergstas.energydrinkrecorder.activities.MainActivity
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity.TablesId.Companion.ENTRIES_ID
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity.TablesId.Companion.POSITIONS_ID
 import com.sergstas.energydrinkrecorder.models.EntryInfo
@@ -55,7 +53,7 @@ class DBWorker public constructor(controller: DBController) {
 
     fun tryRemovePosition(id: Int): Boolean {
         if (_controller.selectBy(POSITIONS_ID, "_id", id)?.count() != 0)
-            return _controller.tryRemoveBy(POSITIONS_ID, "_id", id)
+            return _controller.removeBy(POSITIONS_ID, "_id", id)
         return false
     }
 
@@ -65,7 +63,7 @@ class DBWorker public constructor(controller: DBController) {
 
     fun tryRemoveEntry(id: Int): Boolean {
         if (_controller.selectBy(ENTRIES_ID, "_id", id)?.count() != 0)
-            return _controller.tryRemoveBy(ENTRIES_ID, "_id", id)
+            return _controller.removeBy(ENTRIES_ID, "_id", id)
         return false
     }
 
@@ -79,6 +77,15 @@ class DBWorker public constructor(controller: DBController) {
         val edId = entry.getValue("edId") as Int
         val position = _controller.selectBy(POSITIONS_ID, "_id", edId)!!.first()
         return EntryInfo(entry, position)
+    }
+
+    fun removeRelatedEntries(id: Int): Boolean {
+        if (_controller.selectBy(ENTRIES_ID, "edId", id) == null)
+            return false
+        val ids = _controller.selectBy(ENTRIES_ID, "edId", id)!!.select { row -> row.getValue("_id") as Int }
+        for (curId in ids)
+            _controller.removeBy(ENTRIES_ID, "_id", curId)
+        return true
     }
 
     private fun countVolumeAndPriceFrom(rows: Iterable<Row>?): Pair<Double, Double>? {

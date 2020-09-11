@@ -19,7 +19,6 @@ class MainActivity : DBHolderActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         updateDataBar()
-        controller.tryClear(ENTRIES_ID)
         setListeners()
     }
 
@@ -30,6 +29,7 @@ class MainActivity : DBHolderActivity() {
         }
         statistics_bSwitch.setOnClickListener {
             _total = !_total
+            statistics_bSwitch.text = getString(if(!_total) R.string.statistics_bSwitch_total else R.string.statistics_bSwitch_daily)
             updateDataBar()
         }
         navigation_bGoTo_positionsList.setOnClickListener {

@@ -55,4 +55,6 @@
     <string name="dialog_text_removeAll">Do you really want to remove all positions? All entries data also would be wiped</string>
     <string name="dialog_decline">Decline</string>
     <string name="dialog_accept">Accept</string>
+    <string name="dialog_removeId_text">Do you really want to remove this position? All related entries would be wiped</string>
+    <string name="statistics_bSwitch_daily">Show daily statistics</string>
 </resources>

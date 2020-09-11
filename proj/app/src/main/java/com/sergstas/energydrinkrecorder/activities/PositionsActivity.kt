@@ -8,17 +8,17 @@ import com.sergstas.energydrinkrecorder.R
 import com.sergstas.energydrinkrecorder.common.Common.Companion.makeToast
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity
 import com.sergstas.energydrinkrecorder.fragments.DialogActivity
+import com.sergstas.energydrinkrecorder.fragments.DialogActivity.Companion.REMOVE_ALL_REQUEST
+import com.sergstas.energydrinkrecorder.fragments.DialogActivity.Companion.REMOVE_ID_REQUEST
 import com.sergstas.energydrinkrecorder.fragments.PositionBarFragment
 import com.sergstas.energydrinkrecorder.fragments.RemoveBarFragment
 import com.sergstas.energydrinkrecorder.models.PositionInfo
 
 @ExperimentalStdlibApi
 class PositionsActivity: DBHolderActivity() {
-    companion object {
-        const val REMOVE_ALL_REQUEST = 0
-    }
-
     private val _fragments = HashMap<Int, PositionBarFragment>()
+
+    private var _selectedId = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,28 +39,28 @@ class PositionsActivity: DBHolderActivity() {
         }
     }
 
-    private fun setRemoveBar() { // TODO: assert
+    private fun setRemoveBar() {
         val bar = RemoveBarFragment()
         bar.setRemoveIdOnClickListener(View.OnClickListener {
             val id = bar.getSelectedId()
             if (id != null) {
-                if (!worker.tryRemovePosition(id))
-                    makeToast(this, getString(R.string.toast_positions_removeId_fail))
-                else {
-                    val fragment = _fragments[id]!!
-                    supportFragmentManager.beginTransaction().remove(fragment).commit()
-                    _fragments.remove(id)
-                    worker.tryRemoveAllEntries()
-                    makeToast(this, getString(R.string.toast_positions_removeId_success))
-                }
+                _selectedId = id
+                removeId()
             }
         })
         bar.setRemoveAllOnClickListener(View.OnClickListener {
-            worker.tryRemoveAllEntries() //TODO: smart entries removing
+            worker.tryRemoveAllEntries()
             removeAll()
         })
         supportFragmentManager.beginTransaction().add(R.id.positions_removeBarHolder, bar).commit()
     }
+
+    private fun removeId() {
+        val intent = Intent(this, DialogActivity::class.java)
+        intent.putExtra(DialogActivity.TEXT_ARG_KEY, getString(R.string.dialog_removeId_text))
+        intent.putExtra(DialogActivity.ACCEPT_ARG_KEY, getString(R.string.dialog_accept))
+        intent.putExtra(DialogActivity.DECLINE_ARG_KEY, getString(R.string.dialog_decline))
+        startActivityForResult(intent, REMOVE_ID_REQUEST)}
 
     private fun removeAll() {
         val intent = Intent(this, DialogActivity::class.java)
@@ -72,18 +72,35 @@ class PositionsActivity: DBHolderActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REMOVE_ALL_REQUEST)
-            if (resultCode == Activity.RESULT_OK)
-                if (data!!.getBooleanExtra(DialogActivity.REQUEST_RESULT_KEY, false)) {
-                    if (!worker.tryRemoveAllPositions())
-                        makeToast(this, getString(R.string.toast_positions_removeAll_fail))
-                    else {
-                        for (fragment in _fragments) {
-                            supportFragmentManager.beginTransaction().remove(fragment.value).commit()
-                            _fragments.remove(fragment.key)
+        if (resultCode == Activity.RESULT_OK)
+            when (requestCode) {
+                REMOVE_ALL_REQUEST -> {
+                    if (data!!.getBooleanExtra(DialogActivity.REQUEST_RESULT_KEY, false)) {
+                        if (!worker.tryRemoveAllPositions())
+                            makeToast(this, getString(R.string.toast_positions_removeAll_fail))
+                        else {
+                            for (fragment in _fragments) {
+                                supportFragmentManager.beginTransaction().remove(fragment.value)
+                                    .commit()
+                                _fragments.remove(fragment.key)
+                            }
+                            makeToast(this, getString(R.string.toast_positions_removeAll_success))
                         }
-                        makeToast(this, getString(R.string.toast_positions_removeAll_success))
                     }
                 }
+                REMOVE_ID_REQUEST -> {
+                    if (data!!.getBooleanExtra(DialogActivity.REQUEST_RESULT_KEY, false)) {
+                        if (!worker.tryRemovePosition(_selectedId))
+                            makeToast(this, getString(R.string.toast_positions_removeId_fail))
+                        else {
+                            val fragment = _fragments[_selectedId]!!
+                            supportFragmentManager.beginTransaction().remove(fragment).commit()
+                            _fragments.remove(_selectedId)
+                            worker.removeRelatedEntries(_selectedId)
+                            makeToast(this, getString(R.string.toast_positions_removeId_success))
+                        }
+                    }
+                }
+            }
     }
 }
