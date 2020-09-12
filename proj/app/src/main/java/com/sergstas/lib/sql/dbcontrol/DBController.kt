@@ -15,7 +15,7 @@ class DBController public constructor(context: Context) {
     private val _tables = HashMap<String, TableInfo>()
     private val _helpers = HashMap<String, OpenHelper>()
 
-    public fun tryAddTable(table: TableInfo, id: String): Boolean {
+    public fun addTable(table: TableInfo, id: String): Boolean {
         if (!table.initFinished)
             return false
         _tables[id] = table
@@ -27,15 +27,14 @@ class DBController public constructor(context: Context) {
         return if (_tables.containsKey(tableId)) _tables[tableId] else null
     }
 
-    public fun tryAddPosition(tableId: String, row: Row): Boolean {
+    public fun addPosition(tableId: String, row: Row): Boolean {
         if (!_tables.containsKey(tableId) || !row.isFilled)
             return false
         val table = _tables[tableId]
         val db = _helpers[tableId]!!.writableDatabase
-        val query = String.format(StrConstants.QUERY_ADD, table!!.name, table!!.columnsParamsString, row.values.format(row.valuesParamsString!!))
+        val query = String.format(StrConstants.QUERY_ADD, table!!.name, table.columnsParamsString, row.values.format(row.valuesParamsString!!))
         return try {
             db.execSQL(query)
-            //db.rawQuery(query, null)
             true
         } catch (e: Exception) {
             false
@@ -54,7 +53,6 @@ class DBController public constructor(context: Context) {
             if (column.type == String::class) "`$castedId`" else castedId.toString())
         return try {
             db.execSQL(query)
-            //db.rawQuery(query, null)
             true
         }
         catch (e: Exception) {
@@ -62,12 +60,11 @@ class DBController public constructor(context: Context) {
         }
     }
 
-    public fun tryClear(tableId: String): Boolean {
+    public fun clear(tableId: String): Boolean {
         if (!_tables.containsKey(tableId))
             return false
         return try {
             _helpers[tableId]!!.writableDatabase.execSQL(String.format(StrConstants.QUERY_DELETE_ALL, _tables[tableId]!!.name))
-            //_helpers[tableId]!!.writableDatabase.rawQuery(String.format(StrConstants.QUERY_DELETE_ALL, _tables[tableId]!!.name), null)
             true
         }
         catch (e: Exception) {

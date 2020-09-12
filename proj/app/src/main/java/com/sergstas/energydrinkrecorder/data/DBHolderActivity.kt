@@ -15,8 +15,8 @@ abstract class DBHolderActivity: AppCompatActivity() {
     init { initDB() }
 
     private fun initDB() {
-        if (!controller.tryAddTable(TablesTemplates.POSITIONS, POSITIONS_ID) ||
-            !controller.tryAddTable(TablesTemplates.ENTRIES, ENTRIES_ID))
+        if (!controller.addTable(TablesTemplates.POSITIONS, POSITIONS_ID) ||
+            !controller.addTable(TablesTemplates.ENTRIES, ENTRIES_ID))
             throw ExceptionInInitializerError("Failed to initialize tables")
     }
 

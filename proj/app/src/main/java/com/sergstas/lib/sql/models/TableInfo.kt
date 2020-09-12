@@ -6,9 +6,8 @@ import com.sergstas.extensions.toArrayList
 import com.sergstas.extensions.where
 import kotlin.reflect.KClass
 
-public class TableInfo {
-    public val name: String
-    public val columns: ArrayList<ColumnInfo<Any>>
+public class TableInfo public constructor(public val name: String) {
+    public val columns = ArrayList<ColumnInfo<Any>>()
     public val columnsCount: Int get() {
         return columns.count()
     }
@@ -23,13 +22,8 @@ public class TableInfo {
     public var initFinished = false
         private set
 
-    public constructor(name: String) {
-        this.name = name
-        columns = ArrayList()
-    }
-
     public fun finishInit() {
-        //call after adding columns
+        // Call after adding columns
         initFinished = true
     }
 

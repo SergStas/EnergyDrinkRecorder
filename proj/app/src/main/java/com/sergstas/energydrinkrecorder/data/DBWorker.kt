@@ -42,13 +42,13 @@ class DBWorker public constructor(controller: DBController) {
     fun addNewEntry(edId: Int, count: Int, date: String) {
         val row = Row(_controller.getTable(ENTRIES_ID)!!)
         row.fill(arrayListOf(null, edId, count, date))
-        _controller.tryAddPosition(ENTRIES_ID, row)
+        _controller.addPosition(ENTRIES_ID, row)
     }
 
     fun addNewPosition(name: String, volume: Float, price: Float) {
         val row = Row(_controller.getTable(POSITIONS_ID)!!)
         row.fill(arrayListOf(null, name, volume, price))
-        _controller.tryAddPosition(POSITIONS_ID, row)
+        _controller.addPosition(POSITIONS_ID, row)
     }
 
     fun tryRemovePosition(id: Int): Boolean {
@@ -58,7 +58,7 @@ class DBWorker public constructor(controller: DBController) {
     }
 
     fun tryRemoveAllPositions(): Boolean {
-        return _controller.tryClear(POSITIONS_ID)
+        return _controller.clear(POSITIONS_ID)
     }
 
     fun tryRemoveEntry(id: Int): Boolean {
@@ -68,7 +68,7 @@ class DBWorker public constructor(controller: DBController) {
     }
 
     fun tryRemoveAllEntries(): Boolean {
-        return _controller.tryClear(ENTRIES_ID)
+        return _controller.clear(ENTRIES_ID)
     }
 
     private fun entryRowToEntryInfo(entry: Row): EntryInfo {

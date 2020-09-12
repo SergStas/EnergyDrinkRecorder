@@ -22,7 +22,7 @@ class OpenHelper(context: Context?, table: TableInfo) :
                         if (column.isIndex) " primary key autoincrement" else " not null default 0"
                     String::class -> " text not null"
                     Float::class -> " float not null default 0"
-                    else -> " ***not implemented, sry***"
+                    else -> throw NotImplementedError("Not implemented")
                 }
         }
     }
