@@ -10,6 +10,7 @@ import java.lang.Exception
 import java.util.zip.DataFormatException
 import kotlin.reflect.cast
 
+@ExperimentalStdlibApi
 class DBController public constructor(context: Context) {
     private val _context: Context = context
     private val _tables = HashMap<String, TableInfo>()
@@ -41,7 +42,23 @@ class DBController public constructor(context: Context) {
         }
     }
 
-    @ExperimentalStdlibApi
+    public fun updateSinglePosition(tableId: String, columnName: String, newValue: Any?, selectorColumn: String, selectorValue: Any?): Boolean {
+        if (!_tables.containsKey(tableId) || !_tables[tableId]!!.containsColumn(columnName))
+            return false
+        val table = _tables[tableId]!!
+        val castedValue = table.getColumn(columnName)!!.type.cast(newValue)
+        val castedSelectedValue = table.getColumn(selectorColumn)!!.type.cast(selectorValue)
+        val db = _helpers[tableId]!!.writableDatabase
+        val query = String.format(StrConstants.QUERY_UPDATE_SINGLE_VALUE, table.name, columnName, castedValue, selectorColumn, selectorValue)
+        return try {
+            db.execSQL(query)
+            true
+        }
+        catch (e: Exception) {
+            false
+        }
+    }
+
     public fun removeBy(tableId: String, columnName: String, value: Any?): Boolean {
         if (!_tables.containsKey(tableId) || !_tables[tableId]!!.containsColumn(columnName))
             return false

@@ -8,5 +8,6 @@ class StrConstants {
         public const val QUERY_CREATE_TABLE = "create table %s (%s);"
         public const val QUERY_SELECT_WHERE = "select * from %s where %s = '%s';"
         public const val QUERY_SELECT_ALL = "select * from %s;"
+        public const val QUERY_UPDATE_SINGLE_VALUE = "update %s set %s = %s where %s = %s"
     }
 }

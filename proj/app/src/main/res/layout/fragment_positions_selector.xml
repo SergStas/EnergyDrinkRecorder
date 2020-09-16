@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/newEntry_tEDName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
+        android:text="@string/position_selector_name"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/posSelector_spinEDName"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
+        android:layout_marginBottom="20dp"
+        android:spinnerMode="dropdown"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/newEntry_tVolume"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
+        android:text="@string/position_selector_volume"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/posSelector_spinVolume"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
+        android:layout_marginBottom="20dp"
+        android:spinnerMode="dropdown"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/newEntry_tPrice"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
+        android:text="@string/position_selector_price"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/posSelector_spinPrice"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
+        android:layout_marginBottom="20dp"
+        android:spinnerMode="dropdown"/>
+</LinearLayout>

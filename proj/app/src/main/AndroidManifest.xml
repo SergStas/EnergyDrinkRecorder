@@ -24,6 +24,7 @@
             android:name=".activities.DialogActivity"
             android:theme="@style/Theme.AppCompat.Dialog"
             android:label="@string/dialog_title"/>
+        <activity android:name=".activities.EditEntryActivity" />
     </application>
 
 </manifest>

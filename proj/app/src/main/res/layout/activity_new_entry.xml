@@ -4,22 +4,11 @@
     android:layout_height="match_parent"
     android:padding="30dp">
 
-    <TextView
-        android:id="@+id/newEntry_tEDName"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:textSize="24sp"
-        android:text="@string/newEntry_tEDName"/>
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/newEntry_spinEDName"
-        android:fontFamily="sans-serif-light"
-        android:textSize="24sp"
-        android:layout_marginBottom="20dp"
-        android:spinnerMode="dropdown"/>
+        android:id="@+id/newEntry_posSelectorContainer"
+        android:orientation="vertical"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -38,40 +27,6 @@
         android:textSize="24sp"
         android:layout_marginBottom="20dp"
         android:text="1"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/newEntry_tVolume"
-        android:fontFamily="sans-serif-light"
-        android:textSize="24sp"
-        android:text="@string/newEntry_sVolume"/>
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/newEntry_spinVolume"
-        android:fontFamily="sans-serif-light"
-        android:textSize="24sp"
-        android:layout_marginBottom="20dp"
-        android:spinnerMode="dropdown"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/newEntry_tPrice"
-        android:fontFamily="sans-serif-light"
-        android:textSize="24sp"
-        android:text="@string/newEntry_price"/>
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/newEntry_spinPrice"
-        android:fontFamily="sans-serif-light"
-        android:textSize="24sp"
-        android:layout_marginBottom="20dp"
-        android:spinnerMode="dropdown"/>
 
     <Button
         android:layout_width="match_parent"
