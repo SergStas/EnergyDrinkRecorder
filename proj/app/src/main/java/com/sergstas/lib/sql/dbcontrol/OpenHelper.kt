@@ -4,7 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
-import com.sergstas.extensions.select
+import com.sergstas.lib.extensions.select
 import com.sergstas.lib.sql.models.ColumnInfo
 import com.sergstas.lib.sql.models.TableInfo
 import com.sergstas.lib.sql.res.StrConstants

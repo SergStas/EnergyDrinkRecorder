@@ -1,4 +1,4 @@
-package com.sergstas.extensions
+package com.sergstas.lib.extensions
 
 public fun <T, R> Iterable<T>.select(selector: (T) -> R): Iterable<R> {
     val result = ArrayList<R>()

@@ -3,12 +3,12 @@ package com.sergstas.energydrinkrecorder.activities
 import android.os.Bundle
 import android.view.View
 import com.sergstas.energydrinkrecorder.R
-import com.sergstas.energydrinkrecorder.common.Common.Companion.makeToast
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity
 import com.sergstas.energydrinkrecorder.fragments.EntriesScrollFragment
 import com.sergstas.energydrinkrecorder.fragments.RemoveBarFragment
 import com.sergstas.energydrinkrecorder.models.EntryInfo
-import com.sergstas.extensions.toArrayList
+import com.sergstas.lib.extensions.toArrayList
+import com.sergstas.lib.toasts.makeDefaultToast
 
 @ExperimentalStdlibApi
 class EntriesActivity: DBHolderActivity() {
@@ -52,12 +52,12 @@ class EntriesActivity: DBHolderActivity() {
             val id = bar.getSelectedId()
             if (id != null) {
                 if (!worker.tryRemoveEntry(id))
-                    makeToast(this, getString(R.string.toast_entries_removeId_fail))
+                    makeDefaultToast(this, getString(R.string.toast_entries_removeId_fail))
                 else {
                     for (fragment in _fragments)
                         if (fragment.tryRemoveFragmentById(id) && fragment.isEmpty())
                             supportFragmentManager.beginTransaction().remove(fragment).commit()
-                    makeToast(this, getString(R.string.toast_entries_removeId_success))
+                    makeDefaultToast(this, getString(R.string.toast_entries_removeId_success))
                 }
             }
         })
@@ -68,13 +68,13 @@ class EntriesActivity: DBHolderActivity() {
 
     private fun removeAll() {
         if (!worker.tryRemoveAllEntries())
-            makeToast(this, getString(R.string.toast_entries_clearAll_failed))
+            makeDefaultToast(this, getString(R.string.toast_entries_clearAll_failed))
         else {
             for (fragment in _fragments) {
                 supportFragmentManager.beginTransaction().remove(fragment).commit()
                 _fragments.remove(fragment)
             }
-            makeToast(this, getString(R.string.toast_entries_removeAll_success))
+            makeDefaultToast(this, getString(R.string.toast_entries_removeAll_success))
         }
     }
 }

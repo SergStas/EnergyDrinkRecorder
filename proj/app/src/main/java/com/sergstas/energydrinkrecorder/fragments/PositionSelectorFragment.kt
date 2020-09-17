@@ -10,11 +10,9 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.sergstas.energydrinkrecorder.R
 import com.sergstas.energydrinkrecorder.models.PositionInfo
-import com.sergstas.extensions.select
-import com.sergstas.extensions.toArrayList
-import com.sergstas.extensions.where
-import kotlinx.android.synthetic.*
-import kotlinx.android.synthetic.main.activity_new_entry.*
+import com.sergstas.lib.extensions.select
+import com.sergstas.lib.extensions.toArrayList
+import com.sergstas.lib.extensions.where
 import kotlinx.android.synthetic.main.fragment_positions_selector.*
 
 @ExperimentalStdlibApi

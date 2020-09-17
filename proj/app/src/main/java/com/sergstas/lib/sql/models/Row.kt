@@ -1,7 +1,7 @@
 package com.sergstas.lib.sql.models
 
 import android.database.Cursor
-import com.sergstas.extensions.*
+import com.sergstas.lib.extensions.*
 
 public class Row public constructor(table: TableInfo) {
     public val parent: TableInfo = table

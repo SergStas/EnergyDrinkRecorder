@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.sergstas.energydrinkrecorder.R
 import com.sergstas.energydrinkrecorder.models.EntryInfo
-import com.sergstas.extensions.round
+import com.sergstas.lib.extensions.round
 import kotlinx.android.synthetic.main.fragment_entrybar.view.*
 
 @ExperimentalStdlibApi

@@ -4,8 +4,8 @@ import com.sergstas.energydrinkrecorder.data.DBHolderActivity.TablesId.Companion
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity.TablesId.Companion.POSITIONS_ID
 import com.sergstas.energydrinkrecorder.models.EntryInfo
 import com.sergstas.energydrinkrecorder.models.PositionInfo
-import com.sergstas.extensions.select
-import com.sergstas.extensions.toArrayList
+import com.sergstas.lib.extensions.select
+import com.sergstas.lib.extensions.toArrayList
 import com.sergstas.lib.sql.dbcontrol.DBController
 import com.sergstas.lib.sql.models.Row
 import java.lang.Exception

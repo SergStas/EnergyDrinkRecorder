@@ -1,4 +1,4 @@
-package com.sergstas.extensions
+package com.sergstas.lib.extensions
 
 import android.database.Cursor
 import java.sql.Blob

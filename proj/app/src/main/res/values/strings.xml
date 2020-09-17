@@ -60,4 +60,9 @@
     <string name="position_selector_name">Name</string>
     <string name="position_selector_volume">Volume</string>
     <string name="position_selector_price">Price</string>
+    <string name="editEntry_tCount">Count</string>
+    <string name="editEntry_tDate_fail">Failed to load date</string>
+    <string name="editEntry_bSubmit">Submit</string>
+    <string name="editEntry_title">Edit entry</string>
+    <string name="main_title">Main menu</string>
 </resources>

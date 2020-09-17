@@ -2,10 +2,10 @@ package com.sergstas.energydrinkrecorder.activities
 
 import android.os.Bundle
 import com.sergstas.energydrinkrecorder.R
-import com.sergstas.energydrinkrecorder.common.Common.Companion.makeToast
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity
 import com.sergstas.energydrinkrecorder.fragments.PositionSelectorFragment
 import com.sergstas.energydrinkrecorder.models.PositionInfo
+import com.sergstas.lib.toasts.makeDefaultToast
 import kotlinx.android.synthetic.main.activity_new_entry.*
 import java.sql.Date
 import kotlin.collections.ArrayList
@@ -109,11 +109,11 @@ class NewEntryActivity: DBHolderActivity() {
                 val count = newEntry_editCount.text.toString().toInt()
                 val date = Date(System.currentTimeMillis()).toString()
                 worker.addNewEntry(edId, count, date)
-                makeToast(this, getString(R.string.toast_newEntry_success))
+                makeDefaultToast(this, getString(R.string.toast_newEntry_success))
                 finish()
             }
             else
-                makeToast(this, getString(R.string.toast_newEntry_fail))
+                makeDefaultToast(this, getString(R.string.toast_newEntry_fail))
         }
     }
 }

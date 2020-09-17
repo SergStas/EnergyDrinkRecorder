@@ -5,13 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.sergstas.energydrinkrecorder.R
-import com.sergstas.energydrinkrecorder.common.Common.Companion.makeToast
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity
 import com.sergstas.energydrinkrecorder.activities.DialogActivity.Companion.REMOVE_ALL_REQUEST
 import com.sergstas.energydrinkrecorder.activities.DialogActivity.Companion.REMOVE_ID_REQUEST
 import com.sergstas.energydrinkrecorder.fragments.PositionBarFragment
 import com.sergstas.energydrinkrecorder.fragments.RemoveBarFragment
 import com.sergstas.energydrinkrecorder.models.PositionInfo
+import com.sergstas.lib.toasts.makeDefaultToast
 
 @ExperimentalStdlibApi
 class PositionsActivity: DBHolderActivity() {
@@ -76,27 +76,27 @@ class PositionsActivity: DBHolderActivity() {
                 REMOVE_ALL_REQUEST -> {
                     if (data!!.getBooleanExtra(DialogActivity.REQUEST_RESULT_KEY, false)) {
                         if (!worker.tryRemoveAllPositions())
-                            makeToast(this, getString(R.string.toast_positions_removeAll_fail))
+                            makeDefaultToast(this, getString(R.string.toast_positions_removeAll_fail))
                         else {
                             for (fragment in _fragments) {
                                 supportFragmentManager.beginTransaction().remove(fragment.value)
                                     .commit()
                                 _fragments.remove(fragment.key)
                             }
-                            makeToast(this, getString(R.string.toast_positions_removeAll_success))
+                            makeDefaultToast(this, getString(R.string.toast_positions_removeAll_success))
                         }
                     }
                 }
                 REMOVE_ID_REQUEST -> {
                     if (data!!.getBooleanExtra(DialogActivity.REQUEST_RESULT_KEY, false)) {
                         if (!worker.tryRemovePosition(_selectedId))
-                            makeToast(this, getString(R.string.toast_positions_removeId_fail))
+                            makeDefaultToast(this, getString(R.string.toast_positions_removeId_fail))
                         else {
                             val fragment = _fragments[_selectedId]!!
                             supportFragmentManager.beginTransaction().remove(fragment).commit()
                             _fragments.remove(_selectedId)
                             worker.removeRelatedEntries(_selectedId)
-                            makeToast(this, getString(R.string.toast_positions_removeId_success))
+                            makeDefaultToast(this, getString(R.string.toast_positions_removeId_success))
                         }
                     }
                 }

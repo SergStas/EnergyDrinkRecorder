@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.sergstas.energydrinkrecorder.R
 import com.sergstas.energydrinkrecorder.data.DBHolderActivity
-import com.sergstas.extensions.round
+import com.sergstas.lib.extensions.round
 import kotlinx.android.synthetic.main.fragment_navigation.*
 import kotlinx.android.synthetic.main.fragment_statistics.*
 import kotlin.math.absoluteValue

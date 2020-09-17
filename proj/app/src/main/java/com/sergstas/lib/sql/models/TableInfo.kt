@@ -1,9 +1,9 @@
 package com.sergstas.lib.sql.models
 
-import com.sergstas.extensions.joinToString
-import com.sergstas.extensions.select
-import com.sergstas.extensions.toArrayList
-import com.sergstas.extensions.where
+import com.sergstas.lib.extensions.joinToString
+import com.sergstas.lib.extensions.select
+import com.sergstas.lib.extensions.toArrayList
+import com.sergstas.lib.extensions.where
 import kotlin.reflect.KClass
 
 public class TableInfo public constructor(public val name: String) {

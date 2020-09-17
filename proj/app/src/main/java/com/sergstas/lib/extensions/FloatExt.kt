@@ -1,4 +1,4 @@
-package com.sergstas.extensions
+package com.sergstas.lib.extensions
 
 import kotlin.math.pow
 import kotlin.math.roundToInt

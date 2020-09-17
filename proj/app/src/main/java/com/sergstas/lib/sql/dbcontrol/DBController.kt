@@ -2,7 +2,7 @@ package com.sergstas.lib.sql.dbcontrol
 
 import android.content.Context
 import android.database.Cursor
-import com.sergstas.extensions.format
+import com.sergstas.lib.extensions.format
 import com.sergstas.lib.sql.models.Row
 import com.sergstas.lib.sql.models.TableInfo
 import com.sergstas.lib.sql.res.StrConstants
