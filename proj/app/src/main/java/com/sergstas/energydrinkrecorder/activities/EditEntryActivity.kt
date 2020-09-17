@@ -8,6 +8,8 @@ import com.sergstas.energydrinkrecorder.fragments.PositionSelectorFragment
 import com.sergstas.energydrinkrecorder.models.EntryInfo
 import com.sergstas.energydrinkrecorder.models.PositionInfo
 import com.sergstas.lib.extensions.handleCrash
+import com.sergstas.lib.extensions.tryParseInt
+import com.sergstas.lib.toasts.makeDefaultToast
 import kotlinx.android.synthetic.main.activity_edit_entry.*
 
 @ExperimentalStdlibApi
@@ -27,6 +29,7 @@ class EditEntryActivity: DBHolderActivity() {
         setContentView(R.layout.activity_edit_entry)
         extractArgs()
         setPositionSelector()
+        setListeners()
     }
 
     private fun extractArgs() {
@@ -50,7 +53,23 @@ class EditEntryActivity: DBHolderActivity() {
 
     private fun setListeners() {
         editEntry_bSubmit.setOnClickListener {
-            //TODO: implement
+            val data = _posSelector.getSelectedData()
+            val count = editEntry_editCount.text.toString()
+            val date = editEntry_tDate.text.toString()
+            if (data == null || !count.tryParseInt().first)
+                makeDefaultToast(this, getString(R.string.toast_editEntry_submit_fail_incorrectData))
+            else {
+                val edId = _positions.first {
+                    p -> p.price == data.third.toFloat() && p.volume == data.second.toFloat() && p.name == data.first
+                }.id
+                val newEntry = EntryInfo(-1, edId, data.first, data.second.toFloat(), data.third.toFloat(), count.toInt(), date)
+                if (!worker.updateEntry(_entry, newEntry))
+                    makeDefaultToast(this, getString(R.string.toast_editEntry_submit_fail_db))
+                else {
+                    makeDefaultToast(this, getString(R.string.toast_editEntry_submit_success))
+                    finish()
+                }
+            }
         }
     }
 

@@ -8,7 +8,6 @@ import com.sergstas.lib.extensions.select
 import com.sergstas.lib.extensions.toArrayList
 import com.sergstas.lib.sql.dbcontrol.DBController
 import com.sergstas.lib.sql.models.Row
-import java.lang.Exception
 import java.sql.Date
 import java.util.zip.DataFormatException
 
@@ -85,6 +84,19 @@ class DBWorker public constructor(controller: DBController) {
         val ids = _controller.selectBy(ENTRIES_ID, "edId", id)!!.select { row -> row.getValue("_id") as Int }
         for (curId in ids)
             _controller.removeBy(ENTRIES_ID, "_id", curId)
+        return true
+    }
+
+    fun updateEntry(oldEntry: EntryInfo, newEntry: EntryInfo): Boolean {
+        if (oldEntry.edId != newEntry.edId && !_controller.updateSinglePosition(
+            ENTRIES_ID, "edId", newEntry.edId, "_id", oldEntry.entryId))
+            return false
+        if (oldEntry.date != newEntry.date && !_controller.updateSinglePosition(
+                ENTRIES_ID, "date", newEntry.date, "_id", oldEntry.entryId))
+            return false
+        if (oldEntry.count != newEntry.count && !_controller.updateSinglePosition(
+                ENTRIES_ID, "count", newEntry.count, "_id", oldEntry.entryId))
+            return false
         return true
     }
 

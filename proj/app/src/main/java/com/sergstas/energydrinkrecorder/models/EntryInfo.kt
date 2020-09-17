@@ -6,7 +6,7 @@ import com.sergstas.lib.sql.models.Row
 import java.lang.Exception
 
 //@ExperimentalStdlibApi
-class EntryInfo constructor(val entryId: Int, private val edId: Int): Parcelable {
+class EntryInfo constructor(val entryId: Int, val edId: Int): Parcelable {
     var edName: String? = null
     var volume: Float? = null
     var price: Float? = null
