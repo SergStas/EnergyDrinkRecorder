@@ -10,8 +10,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/entries_scroll"
-        app:layout_constraintBottom_toTopOf="@id/entries_removeBarHolder"
-        app:layout_constraintVertical_weight="8">
+        app:layout_constraintBottom_toTopOf="@id/entries_removeBarHolder">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,12 +23,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/entries_scroll"
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/entries_removeBarHolder"
-        android:orientation="vertical"
-        app:layout_constraintVertical_weight="1"/>
+        android:orientation="vertical"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

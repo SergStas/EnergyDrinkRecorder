@@ -32,50 +32,36 @@ class DBWorker public constructor(controller: DBController) {
         return countVolumeAndPriceFrom(_controller.getAllPositions(ENTRIES_ID))
     }
 
-    fun getEDIdByName(name: String): Int {
-        return (_controller.getAllPositions(POSITIONS_ID)
-            .first { pos -> pos.getValue("name") as String == name }
-            .getValue("_id")) as Int
-    }
-
-    fun addNewEntry(edId: Int, count: Int, date: String) {
+    fun addNewEntry(edId: Int, count: Int, date: String): Boolean {
         val row = Row(_controller.getTable(ENTRIES_ID)!!)
         row.fill(arrayListOf(null, edId, count, date))
-        _controller.addPosition(ENTRIES_ID, row)
+        return _controller.addPosition(ENTRIES_ID, row)
     }
 
-    fun addNewPosition(name: String, volume: Float, price: Float) {
+    fun addNewPosition(name: String, volume: Float, price: Float): Boolean {
         val row = Row(_controller.getTable(POSITIONS_ID)!!)
         row.fill(arrayListOf(null, name, volume, price))
-        _controller.addPosition(POSITIONS_ID, row)
+        return _controller.addPosition(POSITIONS_ID, row)
     }
 
-    fun tryRemovePosition(id: Int): Boolean {
+    fun removePosition(id: Int): Boolean {
         if (_controller.selectBy(POSITIONS_ID, "_id", id)?.count() != 0)
             return _controller.removeBy(POSITIONS_ID, "_id", id)
         return false
     }
 
-    fun tryRemoveAllPositions(): Boolean {
+    fun removeAllPositions(): Boolean {
         return _controller.clear(POSITIONS_ID)
     }
 
-    fun tryRemoveEntry(id: Int): Boolean {
+    fun removeEntry(id: Int): Boolean {
         if (_controller.selectBy(ENTRIES_ID, "_id", id)?.count() != 0)
             return _controller.removeBy(ENTRIES_ID, "_id", id)
         return false
     }
 
-    fun tryRemoveAllEntries(): Boolean {
+    fun removeAllEntries(): Boolean {
         return _controller.clear(ENTRIES_ID)
-    }
-
-    private fun entryRowToEntryInfo(entry: Row): EntryInfo {
-        if (!entry.isFilled)
-            throw DataFormatException("Unable to create EntryInfo object from $entry: row wasn't filled")
-        val edId = entry.getValue("edId") as Int
-        val position = _controller.selectBy(POSITIONS_ID, "_id", edId)!!.first()
-        return EntryInfo(entry, position)
     }
 
     fun removeRelatedEntries(id: Int): Boolean {
@@ -98,6 +84,14 @@ class DBWorker public constructor(controller: DBController) {
                 ENTRIES_ID, "count", newEntry.count, "_id", oldEntry.entryId))
             return false
         return true
+    }
+
+    private fun entryRowToEntryInfo(entry: Row): EntryInfo {
+        if (!entry.isFilled)
+            throw DataFormatException("Unable to create EntryInfo object from $entry: row wasn't filled")
+        val edId = entry.getValue("edId") as Int
+        val position = _controller.selectBy(POSITIONS_ID, "_id", edId)!!.first()
+        return EntryInfo(entry, position)
     }
 
     private fun countVolumeAndPriceFrom(rows: Iterable<Row>?): Pair<Double, Double>? {

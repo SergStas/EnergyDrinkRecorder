@@ -40,18 +40,28 @@ class PositionsActivity: DBHolderActivity() {
 
     private fun setRemoveBar() {
         val bar = RemoveBarFragment()
-        bar.setRemoveIdOnClickListener(View.OnClickListener {
+        bar.removeIdListener = View.OnClickListener {
             val id = bar.getSelectedId()
             if (id != null) {
                 _selectedId = id
                 removeId()
             }
-        })
-        bar.setRemoveAllOnClickListener(View.OnClickListener {
-            worker.tryRemoveAllEntries()
+        }
+        bar.editIdListener = View.OnClickListener {
+            val id = bar.getSelectedId()
+            if (id != null) {
+                _selectedId = id
+                editId()
+            }
+        }
+        bar.removeAllListener = View.OnClickListener {
             removeAll()
-        })
+        }
         supportFragmentManager.beginTransaction().add(R.id.positions_removeBarHolder, bar).commit()
+    }
+
+    private fun editId() {
+        makeDefaultToast(this, getString(R.string.toast_notImplemented))
     }
 
     private fun removeId() {
@@ -75,9 +85,10 @@ class PositionsActivity: DBHolderActivity() {
             when (requestCode) {
                 REMOVE_ALL_REQUEST -> {
                     if (data!!.getBooleanExtra(DialogActivity.REQUEST_RESULT_KEY, false)) {
-                        if (!worker.tryRemoveAllPositions())
+                        if (!worker.removeAllPositions())
                             makeDefaultToast(this, getString(R.string.toast_positions_removeAll_fail))
                         else {
+                            worker.removeAllEntries()
                             for (fragment in _fragments) {
                                 supportFragmentManager.beginTransaction().remove(fragment.value)
                                     .commit()
@@ -89,7 +100,7 @@ class PositionsActivity: DBHolderActivity() {
                 }
                 REMOVE_ID_REQUEST -> {
                     if (data!!.getBooleanExtra(DialogActivity.REQUEST_RESULT_KEY, false)) {
-                        if (!worker.tryRemovePosition(_selectedId))
+                        if (!worker.removePosition(_selectedId))
                             makeDefaultToast(this, getString(R.string.toast_positions_removeId_fail))
                         else {
                             val fragment = _fragments[_selectedId]!!

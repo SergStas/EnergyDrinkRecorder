@@ -12,11 +12,15 @@ import kotlinx.android.synthetic.main.fragment_entrybar.view.*
 
 @ExperimentalStdlibApi
 class EntryBarFragment: Fragment() {
+    companion object {
+        const val ENTRY_ARG_KEY = "entry"
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_entrybar, container, false)
-        if (arguments!!.getParcelable<EntryInfo>(EntriesScrollFragment.ENTRY_BAR_ARG_KEY) == null)
+        if (arguments!!.getParcelable<EntryInfo>(ENTRY_ARG_KEY) == null)
             throw IllegalArgumentException("Invalid bundle for $this")
-        val entry = arguments!!.getParcelable<EntryInfo>(EntriesScrollFragment.ENTRY_BAR_ARG_KEY)!!
+        val entry = arguments!!.getParcelable<EntryInfo>(ENTRY_ARG_KEY)!!
         fillTextViews(view, entry)
         return view
     }

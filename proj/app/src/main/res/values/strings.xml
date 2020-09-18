@@ -68,4 +68,7 @@
     <string name="toast_editEntry_submit_fail_incorrectData">Failed to edit entry: invalid values</string>
     <string name="toast_editEntry_submit_fail_db">Failed to edit entry completely</string>
     <string name="toast_editEntry_submit_success">Edited successfully</string>
+    <string name="removeBar_bEdit">Edit Id</string>
+    <string name="toast_notImplemented">Not implemented, sorry</string>
+    <string name="toast_entries_editId_fail_notFound">Id not found</string>
 </resources>

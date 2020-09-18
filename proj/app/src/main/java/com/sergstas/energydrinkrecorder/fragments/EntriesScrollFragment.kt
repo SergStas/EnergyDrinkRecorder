@@ -13,15 +13,15 @@ import kotlinx.android.synthetic.main.fragment_entrieslist.view.*
 @ExperimentalStdlibApi
 class EntriesScrollFragment: Fragment() {
     companion object {
-        const val ENTRY_BAR_ARG_KEY = "entryInfo"
+        const val ENTRIES_ARG_KEY = "entries"
     }
     private val _idDictionary = HashMap<Int, Fragment>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_entrieslist, container, false)
-        if (arguments!!.getParcelableArrayList<EntryInfo>(EntriesActivity.ENTRIES_LIST_ARG_KEY) == null)
+        if (arguments!!.getParcelableArrayList<EntryInfo>(ENTRIES_ARG_KEY) == null)
             throw IllegalArgumentException("Invalid arguments for $this")
-        val rows = arguments!!.getParcelableArrayList<EntryInfo>(EntriesActivity.ENTRIES_LIST_ARG_KEY)!!
+        val rows = arguments!!.getParcelableArrayList<EntryInfo>(ENTRIES_ARG_KEY)!!
         if (rows.count() == 0)
             return view
         processEntriesList(rows, view)
@@ -52,7 +52,7 @@ class EntriesScrollFragment: Fragment() {
         val fragment = EntryBarFragment()
         _idDictionary[entry.entryId] = fragment
         val bundle = Bundle()
-        bundle.putParcelable(ENTRY_BAR_ARG_KEY, entry)
+        bundle.putParcelable(EntryBarFragment.ENTRY_ARG_KEY, entry)
         fragment.arguments = bundle
         return fragment
     }
