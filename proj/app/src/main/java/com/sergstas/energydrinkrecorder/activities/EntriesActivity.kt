@@ -67,7 +67,7 @@ class EntriesActivity: DBHolderActivity() {
         bar.editIdListener = View.OnClickListener {
             val id = bar.getSelectedId()
             if (id != null) {
-                editId(id) //TODO: debug
+                editId(id)
             }
         }
         bar.removeAllListener = View.OnClickListener{
@@ -82,7 +82,7 @@ class EntriesActivity: DBHolderActivity() {
             val intent = Intent(this, EditEntryActivity::class.java)
             intent.putExtra(EditEntryActivity.POSITIONS_ARG_KEY, _positions)
             intent.putExtra(EditEntryActivity.ENTRY_ARG_KEY, _entries.first { e -> e.entryId == id})
-            startActivity(intent)
+            startActivity(intent) //TODO: update old fragments
         }
     }
 

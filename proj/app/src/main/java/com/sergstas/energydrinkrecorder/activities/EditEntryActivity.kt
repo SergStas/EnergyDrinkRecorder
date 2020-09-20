@@ -24,8 +24,8 @@ class EditEntryActivity: DBHolderActivity() {
     private lateinit var _posSelector: PositionSelectorFragment
 
     //TODO: finish
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_entry)
         extractArgs()
         setPositionSelector()
@@ -47,8 +47,15 @@ class EditEntryActivity: DBHolderActivity() {
         _posSelector = PositionSelectorFragment(this)
         val bundle = Bundle()
         bundle.putParcelableArrayList(PositionSelectorFragment.POSITIONS_ARG_KEY, _positions)
+        bundle.putParcelable(PositionSelectorFragment.DEFAULT_POSITION_ARG_KEY, worker.getPosInfoById(_entry.edId))
         _posSelector.arguments = bundle
         supportFragmentManager.beginTransaction().add(R.id.editEntry_posSelectorHolder, _posSelector).commit()
+        setSelectedValues()
+    }
+
+    private fun setSelectedValues() {
+        editEntry_editCount.setText(_entry.count.toString())
+        editEntry_tDate.text = _entry.date
     }
 
     private fun setListeners() {
@@ -56,7 +63,7 @@ class EditEntryActivity: DBHolderActivity() {
             val data = _posSelector.getSelectedData()
             val count = editEntry_editCount.text.toString()
             val date = editEntry_tDate.text.toString()
-            if (data == null || !count.tryParseInt().first)
+            if (data == null || !count.tryParseInt().first || date.contains(' '))
                 makeDefaultToast(this, getString(R.string.toast_editEntry_submit_fail_incorrectData))
             else {
                 val edId = _positions.first {

@@ -66,7 +66,7 @@
     <string name="editEntry_title">Edit entry</string>
     <string name="main_title">Main menu</string>
     <string name="toast_editEntry_submit_fail_incorrectData">Failed to edit entry: invalid values</string>
-    <string name="toast_editEntry_submit_fail_db">Failed to edit entry completely</string>
+    <string name="toast_editEntry_submit_fail_db">Failed to completely edit entry</string>
     <string name="toast_editEntry_submit_success">Edited successfully</string>
     <string name="removeBar_bEdit">Edit Id</string>
     <string name="toast_notImplemented">Not implemented, sorry</string>

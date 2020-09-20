@@ -10,6 +10,7 @@ class PositionInfo constructor(val id: Int): Parcelable {
     var name: String? = null
     var volume: Float? = null
     var price: Float? = null
+    val isFilled: Boolean get() { return name != null && volume != null && price != null }
 
     constructor(parcel: Parcel) : this(parcel.readInt()) {
         name = parcel.readString()

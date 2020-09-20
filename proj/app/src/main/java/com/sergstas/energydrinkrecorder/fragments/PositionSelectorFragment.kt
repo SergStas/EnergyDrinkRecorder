@@ -19,12 +19,14 @@ import kotlinx.android.synthetic.main.fragment_positions_selector.*
 class PositionSelectorFragment constructor(private val _context: Context): Fragment() {
     companion object {
         const val POSITIONS_ARG_KEY = "positions"
+        const val DEFAULT_POSITION_ARG_KEY = "defaultPos"
     }
     private lateinit var _view: View
 
     private var _name: String? = null
     private var _volume: String? = null
     private var _price: String? = null
+    private var _default: PositionInfo? = null
 
     private lateinit var _positions: ArrayList<PositionInfo>
     private var _names = ArrayList<String>()
@@ -38,13 +40,15 @@ class PositionSelectorFragment constructor(private val _context: Context): Fragm
         _positions = arguments!!.getParcelableArrayList<PositionInfo>(POSITIONS_ARG_KEY)!!
         _names = _positions.select { p -> p.name!! }.distinct().toArrayList()
         _name = _names.first()
+        _default = arguments!!.getParcelable(DEFAULT_POSITION_ARG_KEY)
         _view = view
-        //setupSpinners()
         return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        if (_default != null)
+            setValues(_default!!)
         setupSpinners()
     }
 
@@ -52,6 +56,18 @@ class PositionSelectorFragment constructor(private val _context: Context): Fragm
         return if (_name != null && _volume != null && _price != null)
             Triple(_name!!, _volume!!, _price!!)
         else null
+    }
+
+    private fun setValues(pos: PositionInfo) {
+        if (!pos.isFilled)
+            throw IllegalArgumentException("Invalid position info format")
+        _names.remove(pos.name)
+        _names.add(0, pos.name!!)
+        _volumes.remove(pos.volume.toString())
+        _volumes.add(0, pos.volume!!.toString())
+        _prices.remove(pos.price.toString())
+        _prices.add(0, pos.price!!.toString())
+        setupSpinners()
     }
 
     private fun setupSpinners() {

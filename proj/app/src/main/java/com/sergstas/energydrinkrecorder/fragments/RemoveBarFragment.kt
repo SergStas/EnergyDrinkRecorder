@@ -19,7 +19,7 @@ class RemoveBarFragment: Fragment() {
         val view = inflater.inflate(R.layout.fragment_remove_bar, container, false)
         view.removeBar_bRemoveId.setOnClickListener(removeIdListener)
         view.removeBar_bRemoveAll.setOnClickListener(removeAllListener)
-        view.removeBar_editId.setOnClickListener(editIdListener)
+        view.removeBar_bEdit.setOnClickListener(editIdListener)
         return view
     }
 

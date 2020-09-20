@@ -49,7 +49,7 @@ class DBController public constructor(context: Context) {
         val castedValue = table.getColumn(columnName)!!.type.cast(newValue)
         val castedSelectedValue = table.getColumn(selectorColumn)!!.type.cast(selectorValue)
         val db = _helpers[tableId]!!.writableDatabase
-        val query = String.format(StrConstants.QUERY_UPDATE_SINGLE_VALUE, table.name, columnName, castedValue, selectorColumn, selectorValue)
+        val query = String.format(StrConstants.QUERY_UPDATE_SINGLE_VALUE, table.name, columnName, castedValue, selectorColumn, castedSelectedValue)
         return try {
             db.execSQL(query)
             true

@@ -73,6 +73,11 @@ class DBWorker public constructor(controller: DBController) {
         return true
     }
 
+    fun getPosInfoById(id: Int): PositionInfo? {
+        return if(_controller.selectBy(POSITIONS_ID, "_id", id)?.first() == null) null
+        else posRowToPosInfo(_controller.selectBy(POSITIONS_ID, "_id", id)?.first()!!)
+    }
+
     fun updateEntry(oldEntry: EntryInfo, newEntry: EntryInfo): Boolean {
         if (oldEntry.edId != newEntry.edId && !_controller.updateSinglePosition(
             ENTRIES_ID, "edId", newEntry.edId, "_id", oldEntry.entryId))
@@ -92,6 +97,12 @@ class DBWorker public constructor(controller: DBController) {
         val edId = entry.getValue("edId") as Int
         val position = _controller.selectBy(POSITIONS_ID, "_id", edId)!!.first()
         return EntryInfo(entry, position)
+    }
+
+    private fun posRowToPosInfo(row: Row): PositionInfo {
+        if (!row.isFilled)
+            throw DataFormatException("Unable to create EntryInfo object from $row: row wasn't filled")
+        return PositionInfo(row)
     }
 
     private fun countVolumeAndPriceFrom(rows: Iterable<Row>?): Pair<Double, Double>? {
